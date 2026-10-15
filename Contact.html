@@ -1,0 +1,2624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Bakerz Bite - Contact Us. Get in touch for orders, queries or feedback.">
+    <title>Contact Us | Bakerz Bite</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+    /* =========================================================
+       BAKERZ BITE - CONTACT PAGE
+    ========================================================= */
+    :root {
+        --bb-light-pink: #F7D0D8;
+        --bb-deep-red: #B21E29;
+        --bb-soft-yellow: #F9E6B5;
+        --bb-dusty-rose: #D68F9A;
+        --bb-pale-cream: #FDF5E6;
+        --bb-white: #ffffff;
+        --bb-dark-text: #4A2025;
+        --bb-soft-text: #76565A;
+        --bb-shadow: 0 10px 30px rgba(178, 30, 41, 0.10);
+        --bb-shadow-sm: 0 4px 15px rgba(178, 30, 41, 0.08);
+        --bb-transition: 0.3s ease;
+        --bb-radius: 20px;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--bb-pale-cream);
+        background-image: url('images/pattern-light.png');
+        background-repeat: repeat;
+        background-size: 280px;
+        background-attachment: fixed;
+        color: var(--bb-dark-text);
+        line-height: 1.7;
+        padding-bottom: 50px;
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+    h1, h2, h3, h4, h5, h6 { font-family: "DM Serif Display", serif; line-height: 1.2; }
+    a { text-decoration: none; }
+    section { padding: 80px 0; position: relative; }
+    .container { width: min(1600px, 96%); margin: auto; }
+
+    .bb-section-heading { max-width: 700px; margin: 0 auto 50px; }
+    .bb-section-heading h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        color: var(--bb-deep-red);
+        margin-bottom: 15px;
+    }
+    .bb-section-heading p { color: var(--bb-soft-text); font-size: 15px; }
+    .bb-section-label {
+        color: var(--bb-deep-red);
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+
+    /* LOCATION POPUP */
+    .bb-loc-popup {
+        position: fixed;
+        inset: 0;
+        background: rgba(74, 32, 37, 0.55);
+        z-index: 10800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s ease, visibility 0.4s ease;
+        backdrop-filter: blur(6px);
+    }
+    .bb-loc-popup.show { opacity: 1; visibility: visible; }
+    .bb-loc-card {
+        background: var(--bb-white);
+        border-radius: 24px;
+        width: 100%;
+        max-width: 520px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(74, 32, 37, 0.40);
+        transform: translateY(30px) scale(0.96);
+        transition: transform 0.4s ease;
+        max-height: 94vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .bb-loc-popup.show .bb-loc-card { transform: translateY(0) scale(1); }
+    .bb-loc-header {
+        background: var(--bb-deep-red);
+        padding: 30px 20px 25px;
+        text-align: center;
+    }
+    .bb-loc-header img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        background: var(--bb-white);
+        border-radius: 50%;
+        padding: 8px;
+        border: 4px solid var(--bb-white);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
+    }
+    .bb-loc-body { padding: 28px 30px 25px; overflow-y: auto; }
+    .bb-loc-title {
+        font-family: "Poppins", sans-serif;
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--bb-dark-text);
+        text-align: center;
+        margin-bottom: 22px;
+    }
+    .bb-order-toggle {
+        display: flex;
+        background: #f4f0ea;
+        border-radius: 40px;
+        padding: 5px;
+        max-width: 340px;
+        margin: 0 auto 20px;
+        border: 1px solid rgba(178, 30, 41, 0.08);
+    }
+    .bb-order-toggle button {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 12px 20px;
+        border-radius: 40px;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--bb-soft-text);
+        cursor: pointer;
+        transition: var(--bb-transition);
+        font-family: inherit;
+    }
+    .bb-order-toggle button.active {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        box-shadow: 0 6px 15px rgba(178, 30, 41, 0.25);
+    }
+    .bb-loc-question {
+        text-align: center;
+        font-size: 14px;
+        color: var(--bb-soft-text);
+        margin-bottom: 18px;
+        font-weight: 500;
+    }
+    .bb-loc-use-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto 20px;
+        padding: 13px 22px;
+        background: var(--bb-white);
+        border: 2px solid var(--bb-deep-red);
+        border-radius: 40px;
+        color: var(--bb-deep-red);
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--bb-transition);
+        font-family: inherit;
+    }
+    .bb-loc-use-btn:hover { background: var(--bb-deep-red); color: var(--bb-white); }
+    .bb-loc-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--bb-dark-text);
+        margin-bottom: 8px;
+        display: block;
+    }
+    .bb-loc-select {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid rgba(178, 30, 41, 0.15);
+        border-radius: 14px;
+        font-size: 15px;
+        font-family: inherit;
+        font-weight: 600;
+        color: var(--bb-dark-text);
+        background: var(--bb-white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234A2025' stroke-width='3'><polyline points='6 9 12 15 18 9'/></svg>") no-repeat right 18px center;
+        background-size: 14px;
+        appearance: none;
+        cursor: pointer;
+        margin-bottom: 16px;
+        outline: none;
+    }
+    .bb-branch-details {
+        background: #fdf1f2;
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin-bottom: 22px;
+        border: 1px solid rgba(178, 30, 41, 0.10);
+    }
+    .bb-branch-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+    .bb-branch-icon {
+        width: 40px; height: 40px; flex-shrink: 0;
+        border-radius: 50%;
+        background: var(--bb-light-pink);
+        color: var(--bb-deep-red);
+        display: grid; place-items: center;
+        font-size: 16px;
+    }
+    .bb-branch-label {
+        font-size: 11px; font-weight: 800;
+        color: var(--bb-deep-red);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+    }
+    .bb-branch-name { font-size: 14px; font-weight: 700; color: var(--bb-dark-text); margin: 0; }
+    .bb-branch-address { font-size: 13px; color: var(--bb-soft-text); margin: 0 0 12px 52px; }
+    .bb-branch-directions {
+        display: inline-flex; align-items: center; gap: 7px;
+        margin-left: 52px;
+        color: var(--bb-deep-red);
+        font-size: 13px; font-weight: 700;
+    }
+    .bb-loc-select-btn {
+        width: 100%;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border: none;
+        padding: 17px;
+        border-radius: 40px;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+        font-family: inherit;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 20px rgba(178, 30, 41, 0.25);
+    }
+
+    /* NAVBAR */
+    .bb-navbar {
+        background: rgba(255, 255, 255, 0.98);
+        padding: 8px 0;
+        box-shadow: 0 2px 15px rgba(178, 30, 41, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 1030;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(178, 30, 41, 0.06);
+        width: 100%;
+    }
+    .bb-nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        flex-wrap: nowrap;
+        min-height: 60px;
+        width: 100%;
+    }
+    .bb-nav-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        min-width: 0;
+    }
+    .bb-nav-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 40px;
+        background: var(--bb-pale-cream);
+        color: var(--bb-dark-text);
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid rgba(178, 30, 41, 0.08);
+        transition: var(--bb-transition);
+        white-space: nowrap;
+        cursor: pointer;
+        max-width: 100%;
+        overflow: hidden;
+    }
+    .bb-nav-pill:hover { background: var(--bb-light-pink); }
+    .bb-nav-pill i { color: var(--bb-deep-red); font-size: 15px; flex-shrink: 0; }
+    .bb-nav-pill .bb-pill-label {
+        font-size: 10px;
+        color: var(--bb-soft-text);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+        display: block;
+        line-height: 1;
+    }
+    .bb-nav-pill .bb-pill-value {
+        color: var(--bb-deep-red);
+        font-weight: 700;
+        font-size: 12px;
+        display: block;
+        line-height: 1.2;
+        max-width: 110px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .bb-nav-pill .bb-chev { font-size: 10px; color: var(--bb-soft-text); flex-shrink: 0; }
+
+    .bb-nav-center {
+        flex-shrink: 0;
+        text-align: center;
+        position: relative;
+        z-index: 1035;
+    }
+    .bb-nav-center .bb-logo { display: block; position: relative; }
+    .bb-nav-center .bb-logo img {
+        width: 90px;
+        height: 90px;
+        object-fit: contain;
+        transition: var(--bb-transition);
+        filter: drop-shadow(0 6px 16px rgba(178, 30, 41, 0.20));
+        background: var(--bb-white);
+        border-radius: 50%;
+        padding: 4px;
+        margin-top: 5px;
+        margin-bottom: -40px;
+    }
+    .bb-nav-center .bb-logo:hover img { transform: scale(1.05); }
+
+    .bb-nav-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+    }
+    .bb-nav-locations-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 40px;
+        background: var(--bb-white);
+        color: var(--bb-dark-text);
+        font-size: 13px;
+        font-weight: 700;
+        border: 1.5px solid rgba(74, 32, 37, 0.15);
+        transition: var(--bb-transition);
+        white-space: nowrap;
+        cursor: pointer;
+        font-family: inherit;
+        box-shadow: 0 2px 8px rgba(74, 32, 37, 0.04);
+    }
+    .bb-nav-locations-btn:hover {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border-color: var(--bb-deep-red);
+        transform: translateY(-2px);
+    }
+    .bb-nav-cart {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border-radius: 50%;
+        justify-content: center;
+        background: var(--bb-white);
+        border: 1.5px solid rgba(74, 32, 37, 0.15);
+        color: var(--bb-dark-text);
+        font-size: 17px;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        transition: var(--bb-transition);
+        box-shadow: 0 2px 8px rgba(74, 32, 37, 0.04);
+        flex-shrink: 0;
+    }
+    .bb-nav-cart:hover {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border-color: var(--bb-deep-red);
+        transform: translateY(-2px);
+    }
+    .bb-cart-count {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        font-size: 10px;
+        font-weight: 800;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--bb-white);
+    }
+    .bb-nav-divider {
+        width: 1.5px;
+        height: 30px;
+        background: rgba(74, 32, 37, 0.15);
+        margin: 0 4px;
+    }
+    .bb-menu-toggle {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(74, 32, 37, 0.15);
+        background: var(--bb-white);
+        color: var(--bb-dark-text);
+        font-size: 17px;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition: var(--bb-transition);
+        box-shadow: 0 2px 8px rgba(74, 32, 37, 0.04);
+        flex-shrink: 0;
+    }
+    .bb-menu-toggle:hover {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border-color: var(--bb-deep-red);
+        transform: translateY(-2px);
+    }
+
+    /* DROPDOWN MENU PANEL */
+    .bb-dropdown-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(74, 32, 37, 0.50);
+        z-index: 1040;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.35s ease, visibility 0.35s ease;
+        backdrop-filter: blur(4px);
+    }
+    .bb-dropdown-overlay.show { opacity: 1; visibility: visible; }
+    .bb-dropdown-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 400px;
+        max-width: 90vw;
+        height: 100vh;
+        background: var(--bb-white);
+        z-index: 1045;
+        transform: translateX(100%);
+        transition: transform 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        box-shadow: -10px 0 40px rgba(74, 32, 37, 0.20);
+        overflow-y: auto;
+    }
+    .bb-dropdown-panel.show { transform: translateX(0); }
+    .bb-dropdown-header {
+        padding: 25px 30px;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+    }
+    .bb-dropdown-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 24px;
+        margin: 0;
+        color: var(--bb-white);
+    }
+    .bb-dropdown-close {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255, 255, 255, 0.15);
+        color: var(--bb-white);
+        font-size: 18px;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition: var(--bb-transition);
+    }
+    .bb-dropdown-close:hover {
+        background: var(--bb-white);
+        color: var(--bb-deep-red);
+    }
+    .bb-dropdown-body {
+        padding: 25px 30px 35px;
+        flex: 1;
+    }
+    .bb-dropdown-section-title {
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--bb-soft-text);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+    .bb-dropdown-section-title:not(:first-child) { margin-top: 30px; }
+    .bb-dropdown-list { list-style: none; padding: 0; margin: 0; }
+    .bb-dropdown-list li a {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 16px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--bb-dark-text);
+        border-radius: 12px;
+        transition: var(--bb-transition);
+        margin-bottom: 4px;
+    }
+    .bb-dropdown-list li a:hover,
+    .bb-dropdown-list li a.active {
+        background: var(--bb-light-pink);
+        color: var(--bb-deep-red);
+        padding-left: 22px;
+    }
+    .bb-dropdown-list li a i {
+        color: var(--bb-deep-red);
+        width: 22px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    /* PAGE HEADER */
+    .bb-page-header {
+        position: relative;
+        width: min(1700px, 98%);
+        margin: 25px auto 0;
+        min-height: 340px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        border-radius: 30px;
+        background:
+            linear-gradient(rgba(178, 30, 41, 0.75), rgba(178, 30, 41, 0.75)),
+            url('images/hero-3.png') center/cover no-repeat;
+        padding: 60px 0;
+        box-shadow: 0 15px 40px rgba(178, 30, 41, 0.12);
+        text-align: center;
+    }
+    .bb-page-header-inner {
+        position: relative;
+        z-index: 2;
+        width: min(1580px, 96%);
+        margin: 0 auto;
+    }
+    .bb-page-header h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        color: var(--bb-white);
+        font-weight: 400;
+        margin-bottom: 12px;
+        letter-spacing: -1px;
+    }
+    .bb-page-header p {
+        color: rgba(255, 255, 255, 0.92);
+        font-size: 17px;
+        max-width: 600px;
+        margin: 0 auto 20px;
+    }
+    .bb-breadcrumb {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.90);
+    }
+    .bb-breadcrumb a {
+        color: var(--bb-soft-yellow);
+        font-weight: 600;
+        transition: var(--bb-transition);
+    }
+    .bb-breadcrumb a:hover { text-decoration: underline; }
+    .bb-breadcrumb span { color: rgba(255, 255, 255, 0.70); }
+
+    /* CONTACT CARDS */
+    .bb-contact-card {
+        background: var(--bb-white);
+        border-radius: 22px;
+        padding: 40px 28px;
+        text-align: center;
+        box-shadow: var(--bb-shadow-sm);
+        transition: var(--bb-transition);
+        border: 1px solid rgba(178, 30, 41, 0.06);
+        height: 100%;
+    }
+    .bb-contact-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--bb-shadow);
+    }
+    .bb-contact-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: var(--bb-soft-yellow);
+        color: var(--bb-deep-red);
+        font-size: 32px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 22px;
+        transition: var(--bb-transition);
+    }
+    .bb-contact-card:hover .bb-contact-icon {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        transform: rotate(-8deg) scale(1.06);
+    }
+    .bb-contact-card h3 {
+        font-family: "Poppins", sans-serif;
+        font-size: 17px;
+        font-weight: 800;
+        color: var(--bb-dark-text);
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .bb-contact-card p {
+        font-size: 14px;
+        color: var(--bb-soft-text);
+        margin-bottom: 6px;
+        line-height: 1.6;
+    }
+    .bb-contact-card a {
+        color: var(--bb-deep-red);
+        font-weight: 700;
+        font-size: 14px;
+        transition: var(--bb-transition);
+    }
+    .bb-contact-card a:hover { color: #941923; }
+
+    /* CONTACT FORM */
+    .bb-contact-form-wrap {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--bb-white);
+        border-radius: 24px;
+        padding: 50px 45px;
+        box-shadow: var(--bb-shadow);
+        border: 1px solid rgba(178, 30, 41, 0.07);
+    }
+
+    .bb-form-group { margin-bottom: 22px; }
+
+    .bb-form-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--bb-dark-text);
+        margin-bottom: 8px;
+        display: block;
+    }
+    .bb-form-label span { color: var(--bb-deep-red); }
+
+    .bb-form-input,
+    .bb-form-select,
+    .bb-form-textarea {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid rgba(178, 30, 41, 0.15);
+        border-radius: 14px;
+        font-size: 14px;
+        font-family: inherit;
+        color: var(--bb-dark-text);
+        background: var(--bb-white);
+        outline: none;
+        transition: var(--bb-transition);
+    }
+    .bb-form-input:focus,
+    .bb-form-select:focus,
+    .bb-form-textarea:focus {
+        border-color: var(--bb-deep-red);
+        box-shadow: 0 0 0 4px rgba(178, 30, 41, 0.08);
+    }
+    .bb-form-textarea {
+        resize: vertical;
+        min-height: 140px;
+    }
+    .bb-form-select {
+        appearance: none;
+        background: var(--bb-white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234A2025' stroke-width='3'><polyline points='6 9 12 15 18 9'/></svg>") no-repeat right 18px center;
+        background-size: 14px;
+        cursor: pointer;
+    }
+
+    .bb-submit-btn {
+        width: 100%;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border: none;
+        padding: 18px 32px;
+        border-radius: 40px;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: var(--bb-transition);
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        box-shadow: 0 8px 20px rgba(178, 30, 41, 0.25);
+        margin-top: 10px;
+    }
+    .bb-submit-btn:hover {
+        background: #941923;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(178, 30, 41, 0.35);
+    }
+
+    /* Success Message */
+    .bb-success-msg {
+        display: none;
+        text-align: center;
+        padding: 40px 30px;
+        background: linear-gradient(135deg, rgba(247, 208, 216, 0.4), rgba(249, 230, 181, 0.4));
+        border-radius: 20px;
+        border: 2px dashed var(--bb-deep-red);
+        margin-top: 24px;
+    }
+    .bb-success-msg.show { display: block; animation: bbFadeIn 0.5s ease; }
+    .bb-success-msg i {
+        font-size: 64px;
+        color: var(--bb-deep-red);
+        margin-bottom: 16px;
+    }
+    .bb-success-msg h3 {
+        font-size: 26px;
+        color: var(--bb-deep-red);
+        margin-bottom: 10px;
+    }
+    .bb-success-msg p {
+        font-size: 15px;
+        color: var(--bb-soft-text);
+        margin: 0;
+    }
+    @keyframes bbFadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MAP SECTION */
+    .bb-map-wrap {
+        width: 100%;
+        height: 420px;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: var(--bb-shadow);
+        border: 1px solid rgba(178, 30, 41, 0.06);
+    }
+    .bb-map-wrap iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+    }
+
+    /* SOCIAL SECTION */
+    .bb-social-wrap {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+    .bb-social-card {
+        width: 100px;
+        height: 100px;
+        border-radius: 20px;
+        background: var(--bb-white);
+        color: var(--bb-deep-red);
+        display: grid;
+        place-items: center;
+        font-size: 32px;
+        box-shadow: var(--bb-shadow-sm);
+        transition: var(--bb-transition);
+        border: 1px solid rgba(178, 30, 41, 0.06);
+    }
+    .bb-social-card:hover {
+        transform: translateY(-6px);
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        box-shadow: var(--bb-shadow);
+    }
+
+    /* SAVED MESSAGES LIST */
+    .bb-saved-msg-wrap {
+        max-width: 900px;
+        margin: 30px auto 0;
+        background: var(--bb-white);
+        border-radius: 24px;
+        padding: 35px 40px;
+        box-shadow: var(--bb-shadow-sm);
+        border: 1px solid rgba(178, 30, 41, 0.07);
+        display: none;
+    }
+    .bb-saved-msg-wrap.show { display: block; }
+    .bb-saved-msg-wrap h3 {
+        font-family: "DM Serif Display", serif;
+        font-size: 22px;
+        color: var(--bb-deep-red);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .bb-saved-msg-item {
+        padding: 16px 18px;
+        border: 1px solid rgba(178, 30, 41, 0.12);
+        border-radius: 14px;
+        margin-bottom: 12px;
+        background: #fdf8f6;
+        position: relative;
+    }
+    .bb-saved-msg-item .msg-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .bb-saved-msg-item .msg-name {
+        font-weight: 800;
+        color: var(--bb-deep-red);
+        font-size: 14px;
+    }
+    .bb-saved-msg-item .msg-subject {
+        background: var(--bb-soft-yellow);
+        color: var(--bb-deep-red);
+        font-size: 10px;
+        font-weight: 800;
+        padding: 4px 12px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .bb-saved-msg-item .msg-text {
+        font-size: 13px;
+        color: var(--bb-soft-text);
+        margin: 0;
+        line-height: 1.6;
+    }
+    .bb-saved-msg-item .msg-time {
+        font-size: 11px;
+        color: #b8a9a9;
+        margin-top: 8px;
+        display: block;
+    }
+    .bb-saved-msg-item .msg-delete {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: transparent;
+        border: none;
+        color: #b8a9a9;
+        font-size: 14px;
+        cursor: pointer;
+        transition: var(--bb-transition);
+    }
+    .bb-saved-msg-item .msg-delete:hover { color: var(--bb-deep-red); }
+
+    /* CART MODAL */
+    .bb-cart-modal .modal-content {
+        border-radius: 24px;
+        border: none;
+        overflow: hidden;
+        box-shadow: 0 25px 70px rgba(74, 32, 37, 0.30);
+        max-height: 85vh;
+    }
+    .bb-cart-modal .modal-header {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        padding: 22px 28px;
+        border: none;
+    }
+    .bb-cart-modal .modal-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .bb-cart-modal .btn-close {
+        filter: invert(1) brightness(2);
+        opacity: 0.9;
+    }
+    .bb-cart-modal .modal-body {
+        padding: 24px 28px;
+        overflow-y: auto;
+        max-height: 55vh;
+        background: var(--bb-pale-cream);
+    }
+    .bb-cart-modal .modal-footer {
+        background: var(--bb-white);
+        padding: 20px 28px;
+        border-top: 1px solid rgba(178, 30, 41, 0.10);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+
+    .bb-cart-empty {
+        text-align: center;
+        padding: 40px 20px;
+    }
+    .bb-cart-empty i {
+        font-size: 64px;
+        color: var(--bb-light-pink);
+        margin-bottom: 18px;
+    }
+    .bb-cart-empty h4 {
+        font-family: "Poppins", sans-serif;
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--bb-dark-text);
+        margin-bottom: 8px;
+    }
+    .bb-cart-empty p {
+        font-size: 13px;
+        color: var(--bb-soft-text);
+        margin: 0;
+    }
+
+    .bb-cart-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: var(--bb-white);
+        border-radius: 14px;
+        padding: 14px 16px;
+        margin-bottom: 12px;
+        box-shadow: var(--bb-shadow-sm);
+        border: 1px solid rgba(178, 30, 41, 0.06);
+    }
+    .bb-cart-item-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: var(--bb-light-pink);
+        color: var(--bb-deep-red);
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+    .bb-cart-item-info {
+        flex: 1;
+        min-width: 0;
+    }
+    .bb-cart-item-info h5 {
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--bb-dark-text);
+        margin-bottom: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .bb-cart-item-info p {
+        font-size: 12px;
+        color: var(--bb-deep-red);
+        font-weight: 700;
+        margin: 0;
+    }
+    .bb-cart-item-remove {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: none;
+        background: #fdf1f2;
+        color: var(--bb-deep-red);
+        font-size: 14px;
+        cursor: pointer;
+        transition: var(--bb-transition);
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+    }
+    .bb-cart-item-remove:hover {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+    }
+
+    .bb-cart-total {
+        font-family: "Poppins", sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--bb-dark-text);
+    }
+    .bb-cart-total strong {
+        color: var(--bb-deep-red);
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .bb-cart-checkout-btn {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border: none;
+        padding: 14px 28px;
+        border-radius: 40px;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: var(--bb-transition);
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .bb-cart-checkout-btn:hover {
+        background: #941923;
+        transform: translateY(-2px);
+    }
+
+    .bb-cart-clear-btn {
+        background: transparent;
+        color: var(--bb-deep-red);
+        border: 2px solid var(--bb-deep-red);
+        padding: 12px 24px;
+        border-radius: 40px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--bb-transition);
+        font-family: inherit;
+    }
+    .bb-cart-clear-btn:hover {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+    }
+
+    /* CTA */
+    .bb-cta {
+        background: rgba(247, 208, 216, 0.88);
+        border-radius: 30px;
+        width: min(1600px, 98%);
+        margin: 0 auto;
+    }
+    .bb-cta-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        color: var(--bb-deep-red);
+        margin-bottom: 15px;
+    }
+    .bb-cta-title span { color: var(--bb-dusty-rose); }
+    .bb-cta-text { color: var(--bb-soft-text); font-size: 15px; }
+
+    /* FOOTER */
+    .bb-footer {
+        background: rgba(178, 30, 41, 0.96);
+        color: var(--bb-white);
+        padding-top: 60px;
+        margin-top: 40px;
+    }
+    .bb-footer-text {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 14px;
+        max-width: 300px;
+        margin: 15px 0;
+    }
+    .bb-social {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--bb-light-pink);
+        color: var(--bb-deep-red);
+        transition: var(--bb-transition);
+        font-size: 15px;
+    }
+    .bb-social:hover {
+        background: var(--bb-soft-yellow);
+        transform: translateY(-3px);
+    }
+    .bb-footer-title {
+        color: var(--bb-soft-yellow);
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .bb-footer-link {
+        display: block;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 14px;
+        margin-bottom: 10px;
+        transition: var(--bb-transition);
+    }
+    .bb-footer-link:hover { color: var(--bb-soft-yellow); padding-left: 5px; }
+    .bb-footer-contact {
+        display: flex;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+    .bb-footer-contact i { color: var(--bb-soft-yellow); margin-top: 5px; }
+    .bb-footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 20px 0;
+        margin-top: 20px;
+    }
+    .bb-footer-bottom p {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 13px;
+        margin: 0;
+    }
+    .bb-footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--bb-white);
+        font-family: "DM Serif Display", serif;
+        font-size: 24px;
+    }
+    .bb-footer-logo img {
+        width: 65px;
+        height: 65px;
+        object-fit: contain;
+        background: var(--bb-white);
+        border-radius: 50%;
+        padding: 4px;
+    }
+
+    /* FLOATING BUTTONS */
+    .bb-float {
+        position: fixed;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 26px;
+        border: none;
+        cursor: pointer;
+        z-index: 1040;
+        transition: var(--bb-transition);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
+    }
+    .bb-whatsapp {
+        background: #25D366;
+        color: var(--bb-white);
+        bottom: 85px;
+        right: 25px;
+    }
+    .bb-whatsapp:hover { transform: scale(1.10); color: var(--bb-white); }
+    .bb-scroll-top {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        bottom: 155px;
+        right: 25px;
+        font-size: 20px;
+        opacity: 0;
+        visibility: hidden;
+    }
+    .bb-scroll-top.show { opacity: 1; visibility: visible; }
+
+    /* BOTTOM TICKER */
+    .bb-ticker {
+        position: fixed;
+        bottom: 0;
+        left: 0; right: 0;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        padding: 10px 0;
+        overflow: hidden;
+        z-index: 1035;
+        border-top: 3px solid var(--bb-soft-yellow);
+        font-size: 13px;
+    }
+    .bb-ticker-track {
+        display: inline-block;
+        white-space: nowrap;
+        animation: bbTickerScroll 35s linear infinite;
+        padding-left: 100%;
+    }
+    .bb-ticker-track:hover { animation-play-state: paused; }
+    .bb-ticker span {
+        margin: 0 30px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .bb-ticker i, .bb-ticker strong { color: var(--bb-soft-yellow); }
+    @keyframes bbTickerScroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+
+    /* TOAST */
+    .bb-toast {
+        position: fixed;
+        bottom: 75px;
+        right: 25px;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        padding: 15px 24px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        transform: translateY(120%);
+        transition: transform 0.4s ease;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 90vw;
+    }
+    .bb-toast.show { transform: translateY(0); }
+
+    /* =========================================================
+       RESPONSIVE — TABLET
+    ========================================================= */
+    @media (max-width: 1199px) {
+        .bb-nav-center .bb-logo img { width: 110px; height: 110px; margin-bottom: -50px; }
+        .bb-nav-pill { padding: 8px 14px; font-size: 12px; }
+        .bb-nav-pill .bb-pill-value { max-width: 100px; }
+        .bb-nav-locations-btn { padding: 10px 18px; font-size: 13px; }
+    }
+
+    @media (max-width: 991px) {
+        .bb-nav-left .bb-nav-pill:first-child { display: none; }
+        .bb-nav-center .bb-logo img { width: 100px; height: 100px; margin-bottom: -42px; }
+        .bb-nav-locations-btn { padding: 9px 16px; font-size: 12px; }
+        .bb-nav-locations-btn span { display: none; }
+        .bb-nav-cart, .bb-menu-toggle { width: 42px; height: 42px; font-size: 16px; }
+
+        .bb-page-header { min-height: 280px; padding: 50px 0; }
+        .bb-page-header h1 { font-size: 3rem; }
+
+        .bb-contact-form-wrap { padding: 40px 32px; }
+        .bb-saved-msg-wrap { padding: 28px 24px; }
+    }
+
+    /* =========================================================
+       RESPONSIVE — MOBILE (MAIN FIX)
+    ========================================================= */
+    @media (max-width: 767px) {
+        /* Global */
+        section { padding: 40px 0; }
+        .container { width: 94%; }
+        .bb-section-heading { margin-bottom: 25px; }
+        .bb-section-heading h2 { font-size: 1.5rem; margin-bottom: 8px; }
+        .bb-section-heading p { font-size: 12px; }
+        .bb-section-label { font-size: 11px; letter-spacing: 1.5px; }
+
+        /* NAVBAR */
+        .bb-navbar { padding: 6px 0; }
+        .bb-nav-container {
+            min-height: 52px;
+            gap: 6px;
+            padding: 0;
+        }
+        .bb-nav-left { display: none; }
+        .bb-nav-center .bb-logo img {
+            width: 62px;
+            height: 62px;
+            margin-bottom: -22px;
+            padding: 3px;
+        }
+        .bb-nav-locations-btn {
+            padding: 8px 12px;
+            font-size: 12px;
+            min-width: auto;
+        }
+        .bb-nav-locations-btn span { display: none; }
+        .bb-nav-locations-btn::before {
+            content: "\f3c5";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 13px;
+            color: var(--bb-deep-red);
+        }
+        .bb-nav-locations-btn:hover::before { color: var(--bb-white); }
+        .bb-nav-cart, .bb-menu-toggle {
+            width: 40px;
+            height: 40px;
+            font-size: 15px;
+        }
+        .bb-cart-count {
+            width: 18px;
+            height: 18px;
+            font-size: 9px;
+            top: -3px;
+            right: -3px;
+        }
+        .bb-nav-divider { display: none; }
+
+        /* PAGE HEADER — FULL WIDTH COMPACT */
+        .bb-page-header {
+            width: 100vw !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            margin-left: calc(-50vw + 50%) !important;
+            margin-right: calc(-50vw + 50%) !important;
+            border-radius: 0 !important;
+            min-height: 180px;
+            padding: 40px 0 30px;
+            box-shadow: none;
+        }
+        .bb-page-header-inner { width: 100% !important; padding: 0 16px; }
+        .bb-page-header h1 { font-size: 1.9rem; margin-bottom: 6px; }
+        .bb-page-header p { font-size: 12px; margin-bottom: 12px; max-width: 95%; }
+        .bb-breadcrumb { font-size: 11px; gap: 6px; }
+
+        /* CONTACT CARDS — 2 columns compact */
+        .bb-contact-card {
+            padding: 18px 12px;
+            border-radius: 14px;
+        }
+        .bb-contact-icon {
+            width: 46px;
+            height: 46px;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .bb-contact-card h3 {
+            font-size: 11px;
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+        .bb-contact-card p {
+            font-size: 10px;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+        .bb-contact-card p[style*="margin-bottom: 14px"] {
+            margin-bottom: 8px !important;
+        }
+        .bb-contact-card a {
+            font-size: 10px;
+        }
+
+        /* Contact info section wrapper — 2 columns */
+        section[style*="padding: 90px 0 40px"] .col-md-6.col-lg-3 {
+            flex: 0 0 auto;
+            width: 50%;
+            padding-left: 6px;
+            padding-right: 6px;
+        }
+        section[style*="padding: 90px 0 40px"] .row.g-4 {
+            --bs-gutter-x: 10px;
+            --bs-gutter-y: 10px;
+        }
+
+        /* CONTACT FORM */
+        .bb-contact-form-wrap {
+            padding: 22px 16px;
+            border-radius: 16px;
+        }
+        .bb-form-group { margin-bottom: 14px; }
+        .bb-form-label { font-size: 11px; margin-bottom: 6px; }
+        .bb-form-input,
+        .bb-form-select,
+        .bb-form-textarea {
+            padding: 11px 14px;
+            font-size: 12px;
+            border-radius: 10px;
+        }
+        .bb-form-textarea { min-height: 100px; }
+        .bb-submit-btn {
+            padding: 13px 22px;
+            font-size: 12px;
+            gap: 6px;
+        }
+
+        /* Success message */
+        .bb-success-msg {
+            padding: 24px 18px;
+            border-radius: 14px;
+        }
+        .bb-success-msg i { font-size: 42px; margin-bottom: 10px; }
+        .bb-success-msg h3 { font-size: 16px; margin-bottom: 6px; }
+        .bb-success-msg p { font-size: 11px; }
+
+        /* SAVED MESSAGES */
+        .bb-saved-msg-wrap {
+            padding: 18px 14px;
+            border-radius: 16px;
+            margin-top: 20px;
+        }
+        .bb-saved-msg-wrap h3 { font-size: 14px; margin-bottom: 12px; gap: 6px; }
+        .bb-saved-msg-item {
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+        .bb-saved-msg-item .msg-name { font-size: 11px; }
+        .bb-saved-msg-item .msg-subject { font-size: 8px; padding: 2px 8px; }
+        .bb-saved-msg-item .msg-text { font-size: 10px; line-height: 1.5; }
+        .bb-saved-msg-item .msg-time { font-size: 9px; margin-top: 6px; }
+        .bb-saved-msg-item .msg-delete { font-size: 11px; top: 8px; right: 8px; }
+        .bb-cart-clear-btn {
+            padding: 10px 16px;
+            font-size: 11px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* MAP SECTION */
+        .bb-map-wrap {
+            height: 240px;
+            border-radius: 16px;
+        }
+
+        /* Location cards in map section */
+        section[style*="padding: 60px 0 90px; background"] .col-md-6.col-lg-3 {
+            flex: 0 0 auto;
+            width: 50%;
+            padding-left: 6px;
+            padding-right: 6px;
+        }
+        section[style*="padding: 60px 0 90px; background"] .row.g-4 {
+            --bs-gutter-x: 10px;
+            --bs-gutter-y: 10px;
+        }
+        section[style*="padding: 60px 0 90px; background"] .row.g-4 > div > div {
+            padding: 14px 10px !important;
+            border-radius: 12px !important;
+        }
+        section[style*="padding: 60px 0 90px; background"] .row.g-4 > div > div > div:first-child {
+            width: 36px !important;
+            height: 36px !important;
+            font-size: 14px !important;
+            margin-bottom: 8px !important;
+        }
+        section[style*="padding: 60px 0 90px; background"] .row.g-4 > div > div h3 {
+            font-size: 11px !important;
+            margin-bottom: 4px !important;
+        }
+        section[style*="padding: 60px 0 90px; background"] .row.g-4 > div > div p {
+            font-size: 10px !important;
+        }
+
+        /* SOCIAL CARDS */
+        .bb-social-wrap { gap: 10px; margin-top: 10px; }
+        .bb-social-card {
+            width: 56px;
+            height: 56px;
+            font-size: 22px;
+            border-radius: 14px;
+        }
+
+        /* CART MODAL */
+        .bb-cart-modal .modal-header { padding: 14px 18px; }
+        .bb-cart-modal .modal-title { font-size: 16px; }
+        .bb-cart-modal .modal-body { padding: 14px 16px; max-height: 50vh; }
+        .bb-cart-modal .modal-footer {
+            padding: 12px 16px;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+        }
+        .bb-cart-item { padding: 10px; gap: 10px; }
+        .bb-cart-item-icon { width: 38px; height: 38px; font-size: 16px; }
+        .bb-cart-item-info h5 { font-size: 12px; }
+        .bb-cart-item-info p { font-size: 11px; }
+        .bb-cart-item-remove { width: 28px; height: 28px; font-size: 11px; }
+        .bb-cart-total { font-size: 12px; text-align: center; }
+        .bb-cart-total strong { font-size: 15px; }
+        .bb-cart-checkout-btn,
+        .bb-cart-clear-btn {
+            padding: 11px 20px;
+            font-size: 12px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* LOCATION POPUP */
+        .bb-loc-card { max-width: 94vw; border-radius: 18px; }
+        .bb-loc-header { padding: 20px 15px 18px; }
+        .bb-loc-header img { width: 70px; height: 70px; padding: 5px; }
+        .bb-loc-body { padding: 20px 18px 18px; }
+        .bb-loc-title { font-size: 17px; margin-bottom: 16px; }
+        .bb-order-toggle button { padding: 10px 14px; font-size: 12px; }
+        .bb-loc-question { font-size: 12px; margin-bottom: 14px; }
+        .bb-loc-use-btn { padding: 10px 16px; font-size: 12px; margin-bottom: 14px; max-width: 100%; }
+        .bb-loc-label { font-size: 11px; }
+        .bb-loc-select { padding: 12px 16px; font-size: 13px; margin-bottom: 12px; }
+        .bb-branch-details { padding: 14px 14px; margin-bottom: 16px; }
+        .bb-branch-icon { width: 32px; height: 32px; font-size: 13px; }
+        .bb-branch-label { font-size: 10px; }
+        .bb-branch-name { font-size: 12px; }
+        .bb-branch-address { font-size: 11px; margin-left: 44px; margin-bottom: 8px; }
+        .bb-branch-directions { font-size: 11px; margin-left: 44px; }
+        .bb-loc-select-btn { padding: 13px; font-size: 14px; }
+
+        /* CTA */
+        .bb-cta { border-radius: 20px; padding: 30px 0; width: 96%; }
+        .bb-cta-title { font-size: 1.5rem; margin-bottom: 10px; }
+        .bb-cta-text { font-size: 12px; }
+
+        /* FOOTER */
+        .bb-footer { padding-top: 35px; margin-top: 30px; }
+        .bb-footer-title { font-size: 15px; margin-bottom: 12px; }
+        .bb-footer-link { font-size: 12px; margin-bottom: 6px; }
+        .bb-footer-contact { font-size: 12px; margin-bottom: 8px; }
+        .bb-footer-text { font-size: 12px; }
+        .bb-footer-logo img { width: 45px; height: 45px; }
+        .bb-footer-logo { font-size: 18px; }
+        .bb-footer-bottom { padding: 14px 0; }
+        .bb-footer-bottom p { font-size: 11px; }
+        .bb-social { width: 34px; height: 34px; font-size: 13px; }
+
+        /* DROPDOWN */
+        .bb-dropdown-panel { width: 100%; max-width: 100%; }
+
+        /* FLOATING BUTTONS */
+        .bb-whatsapp, .bb-scroll-top {
+            right: 12px;
+            width: 44px;
+            height: 44px;
+            font-size: 18px;
+        }
+        .bb-whatsapp { bottom: 60px; }
+        .bb-scroll-top { bottom: 112px; font-size: 15px; }
+
+        /* TICKER */
+        .bb-ticker { font-size: 11px; padding: 8px 0; }
+        .bb-ticker span { margin: 0 22px; gap: 5px; }
+
+        /* TOAST */
+        .bb-toast {
+            bottom: 100px;
+            right: 12px;
+            left: 12px;
+            font-size: 12px;
+            padding: 12px 18px;
+            justify-content: center;
+        }
+    }
+
+    /* =========================================================
+       RESPONSIVE — EXTRA SMALL
+    ========================================================= */
+    @media (max-width: 480px) {
+        .bb-nav-center .bb-logo img { width: 56px; height: 56px; margin-bottom: -20px; }
+        .bb-nav-cart, .bb-menu-toggle { width: 38px; height: 38px; font-size: 14px; }
+        .bb-nav-locations-btn { padding: 7px 10px; }
+        .bb-nav-locations-btn::before { font-size: 12px; }
+
+        .bb-page-header { min-height: 160px; padding: 32px 0 26px; }
+        .bb-page-header h1 { font-size: 1.6rem; }
+        .bb-page-header p { font-size: 11px; }
+
+        /* Contact cards — still 2 columns */
+        .bb-contact-card { padding: 14px 10px; }
+        .bb-contact-icon { width: 40px; height: 40px; font-size: 16px; }
+        .bb-contact-card h3 { font-size: 10px; }
+        .bb-contact-card p { font-size: 9px; }
+        .bb-contact-card a { font-size: 9px; }
+
+        .bb-contact-form-wrap { padding: 18px 14px; }
+        .bb-submit-btn { padding: 11px 18px; font-size: 11px; }
+
+        .bb-social-wrap { gap: 8px; }
+        .bb-social-card { width: 48px; height: 48px; font-size: 18px; border-radius: 12px; }
+
+        .bb-map-wrap { height: 200px; }
+
+        .bb-section-heading h2 { font-size: 1.3rem; }
+    }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOCATION POPUP -->
+    <div class="bb-loc-popup" id="locPopup">
+        <div class="bb-loc-card">
+            <div class="bb-loc-header">
+                <img src="images/logo.png" alt="Bakerz Bite Logo">
+            </div>
+            <div class="bb-loc-body">
+                <h2 class="bb-loc-title">Select Your Order Type</h2>
+
+                <div class="bb-order-toggle">
+                    <button type="button" data-mode="delivery">Delivery</button>
+                    <button type="button" data-mode="pickup" class="active">Pick-Up</button>
+                </div>
+
+                <p class="bb-loc-question" id="locQuestion">
+                    Which outlet would you like to pick-up from?
+                </p>
+
+                <button type="button" class="bb-loc-use-btn" id="useCurrentLocBtn">
+                    <i class="fa-solid fa-location-crosshairs"></i>
+                    Use Current Location
+                </button>
+
+                <label class="bb-loc-label">Select Branch</label>
+
+                <select class="bb-loc-select" id="branchSelect">
+                    <option value="shahfaisal" data-address="Plot 64, Ibrahim Residency, Main Alamgir Road, Shahfaisal" data-name="Bakerz Bite Shahfaisal" data-lat="24.8720" data-lng="67.1520">
+                        Bakerz Bite Shahfaisal
+                    </option>
+                    <option value="dha" data-address="123 Baker Street, DHA Phase 6, Karachi" data-name="Bakerz Bite DHA Phase 6" data-lat="24.8000" data-lng="67.0500">
+                        Bakerz Bite DHA Phase 6
+                    </option>
+                    <option value="gulshan" data-address="Plot 45, Block 13-D, Gulshan-e-Iqbal, Karachi" data-name="Bakerz Bite Gulshan" data-lat="24.9200" data-lng="67.0900">
+                        Bakerz Bite Gulshan
+                    </option>
+                    <option value="clifton" data-address="Shop 12, Boat Basin, Clifton Block 5, Karachi" data-name="Bakerz Bite Clifton" data-lat="24.8138" data-lng="67.0300">
+                        Bakerz Bite Clifton
+                    </option>
+                </select>
+
+                <div class="bb-branch-details">
+                    <div class="bb-branch-head">
+                        <div class="bb-branch-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div>
+                            <div class="bb-branch-label">Branch Location</div>
+                            <p class="bb-branch-name" id="branchName">Bakerz Bite Shahfaisal</p>
+                        </div>
+                    </div>
+                    <p class="bb-branch-address" id="branchAddress">
+                        Address: Plot 64, Ibrahim Residency, Main Alamgir Road, Shahfaisal
+                    </p>
+                    <a href="#" class="bb-branch-directions" id="branchDirections" target="_blank">
+                        <i class="fa-solid fa-diamond-turn-right"></i>
+                        Get Directions
+                    </a>
+                </div>
+
+                <button type="button" class="bb-loc-select-btn" id="locSelectBtn">
+                    Select
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- NAVBAR -->
+    <nav class="bb-navbar">
+        <div class="container bb-nav-container">
+
+            <div class="bb-nav-left">
+                <span class="bb-nav-pill" id="topbarLocationPill">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                        <span class="bb-pill-label">PICKUP</span>
+                        <span class="bb-pill-value" id="topbarBranchName">Bakerz Bite Shahfaisal</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right bb-chev"></i>
+                </span>
+
+                <span class="bb-nav-pill">
+                    <i class="fa-solid fa-phone"></i>
+                    <div>
+                        <span class="bb-pill-value">021-111-022-022</span>
+                    </div>
+                </span>
+            </div>
+
+            <div class="bb-nav-center">
+                <a href="index.html" class="bb-logo">
+                    <img src="images/logo.png" alt="Bakerz Bite Logo">
+                </a>
+            </div>
+
+            <div class="bb-nav-right">
+                <button type="button" class="bb-nav-locations-btn" data-bs-toggle="modal" data-bs-target="#signinModal">
+                    <span>Our Locations</span>
+                </button>
+
+                <button type="button" class="bb-nav-cart" id="openCartBtn" aria-label="Shopping Bag">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="bb-cart-count">0</span>
+                </button>
+
+                <div class="bb-nav-divider d-none d-md-block"></div>
+
+                <button type="button" class="bb-menu-toggle" id="bbMenuToggle" aria-label="Open Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- DROPDOWN PANEL -->
+    <div class="bb-dropdown-overlay" id="bbDropdownOverlay"></div>
+
+    <div class="bb-dropdown-panel" id="bbDropdownPanel">
+        <div class="bb-dropdown-header">
+            <h3 class="bb-dropdown-title">
+                <i class="fa-solid fa-cake-candles"></i> Menu
+            </h3>
+            <button type="button" class="bb-dropdown-close" id="bbDropdownClose">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="bb-dropdown-body">
+            <div class="bb-dropdown-section-title">Main Pages</div>
+            <ul class="bb-dropdown-list">
+                <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                <li><a href="menu.html"><i class="fa-solid fa-book-open"></i> Menu</a></li>
+                <li><a href="merchandise.html"><i class="fa-solid fa-mug-hot"></i> Merchandise</a></li>
+                <li><a href="offers.html"><i class="fa-solid fa-gift"></i> Offers</a></li>
+                <li><a href="gallery.html"><i class="fa-solid fa-images"></i> Gallery</a></li>
+            </ul>
+
+            <div class="bb-dropdown-section-title">Support &amp; Info</div>
+            <ul class="bb-dropdown-list">
+                <li><a href="feedback.html"><i class="fa-solid fa-star"></i> Feedback</a></li>
+                <li><a href="contact.html" class="active"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+                <li><a href="faq.html"><i class="fa-solid fa-circle-question"></i> FAQ</a></li>
+                <li><a href="sitemap.html"><i class="fa-solid fa-sitemap"></i> Sitemap</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- PAGE HEADER -->
+    <section class="bb-page-header">
+        <div class="bb-page-header-inner">
+            <h1>Contact Us</h1>
+            <p>We'd love to hear from you. Reach out for orders, queries or feedback.</p>
+            <div class="bb-breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>Contact</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CONTACT INFO CARDS -->
+    <section style="padding: 90px 0 40px;">
+        <div class="container">
+            <div class="bb-section-heading text-center">
+                <p class="bb-section-label">Get in Touch</p>
+                <h2>How Can We Help You?</h2>
+                <p>Reach out to us through any of the following ways — we're always happy to help.</p>
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="bb-contact-card">
+                        <div class="bb-contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <h3>Visit Us</h3>
+                        <p>123 Baker Street, DHA Phase 6</p>
+                        <p style="margin-bottom: 14px;">Karachi, Pakistan</p>
+                        <a href="#locations">View All Branches <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="bb-contact-card">
+                        <div class="bb-contact-icon"><i class="fa-solid fa-phone"></i></div>
+                        <h3>Call Us</h3>
+                        <p>021-111-022-022</p>
+                        <p style="margin-bottom: 14px;">Mon - Sun: 10 AM - 11 PM</p>
+                        <a href="tel:021111022022">Call Now <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="bb-contact-card">
+                        <div class="bb-contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <h3>Email Us</h3>
+                        <p>hello@bakerzbite.com</p>
+                        <p style="margin-bottom: 14px;">We reply within 24 hours</p>
+                        <a href="mailto:hello@bakerzbite.com">Send Email <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="bb-contact-card">
+                        <div class="bb-contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                        <h3>WhatsApp</h3>
+                        <p>+92 300 123 4567</p>
+                        <p style="margin-bottom: 14px;">Quick response guaranteed</p>
+                        <a href="https://wa.me/923001234567" target="_blank">Chat Now <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CONTACT FORM -->
+    <section style="padding: 40px 0 90px;">
+        <div class="container">
+
+            <div class="bb-section-heading text-center">
+                <p class="bb-section-label">Send a Message</p>
+                <h2>Drop Us a Line</h2>
+                <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+            </div>
+
+            <div class="bb-contact-form-wrap">
+                <form id="contactForm">
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="bb-form-group">
+                                <label class="bb-form-label" for="ctName">Your Name <span>*</span></label>
+                                <input type="text" id="ctName" class="bb-form-input" placeholder="Enter your full name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bb-form-group">
+                                <label class="bb-form-label" for="ctEmail">Email Address <span>*</span></label>
+                                <input type="email" id="ctEmail" class="bb-form-input" placeholder="your@email.com" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="bb-form-group">
+                                <label class="bb-form-label" for="ctPhone">Phone Number (Optional)</label>
+                                <input type="tel" id="ctPhone" class="bb-form-input" placeholder="03XX-XXXXXXX">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bb-form-group">
+                                <label class="bb-form-label" for="ctSubject">Subject <span>*</span></label>
+                                <select id="ctSubject" class="bb-form-select" required>
+                                    <option value="">-- Select a Subject --</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="order">Order Related</option>
+                                    <option value="custom-cake">Custom Cake Order</option>
+                                    <option value="bulk">Bulk Order / Catering</option>
+                                    <option value="complaint">Complaint</option>
+                                    <option value="feedback">Feedback / Suggestion</option>
+                                    <option value="careers">Careers</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bb-form-group">
+                        <label class="bb-form-label" for="ctMessage">Your Message <span>*</span></label>
+                        <textarea id="ctMessage" class="bb-form-textarea" placeholder="Tell us how we can help you..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="bb-submit-btn">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        Send Message
+                    </button>
+
+                </form>
+
+                <!-- Success Message -->
+                <div class="bb-success-msg" id="successMsg">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <h3>Message Sent Successfully!</h3>
+                    <p>Thank you for reaching out to Bakerz Bite. Our team will get back to you within 24 hours.</p>
+                    <p style="margin-top: 16px; font-size: 13px; color: var(--bb-deep-red); font-weight: 700;">— The Bakerz Bite Team</p>
+                </div>
+
+            </div>
+
+            <!-- SAVED MESSAGES LIST -->
+            <div class="bb-saved-msg-wrap" id="savedMsgWrap">
+                <h3>
+                    <i class="fa-solid fa-inbox" style="color: var(--bb-deep-red);"></i>
+                    Your Saved Messages (<span id="savedMsgCount">0</span>)
+                </h3>
+                <div id="savedMsgList"></div>
+                <button type="button" class="bb-cart-clear-btn" id="clearAllMsgs" style="margin-top: 16px;">
+                    <i class="fa-solid fa-trash"></i> Clear All Messages
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- MAP SECTION -->
+    <section id="locations" style="padding: 60px 0 90px; background: rgba(247, 208, 216, 0.4);">
+        <div class="container">
+
+            <div class="bb-section-heading text-center">
+                <p class="bb-section-label">Find Us</p>
+                <h2>Our Main Branch Location</h2>
+                <p>Visit our flagship branch at DHA Phase 6, Karachi.</p>
+            </div>
+
+            <div class="bb-map-wrap">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.5383055869096!2d67.0500!3d24.8000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDQ4JzAwLjAiTiA2N8KwMDMnMDAuMCJF!5e0!3m2!1sen!2s!4v1234567890"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Bakerz Bite Location">
+                </iframe>
+            </div>
+
+            <div class="row g-4 mt-5">
+
+                <div class="col-md-6 col-lg-3">
+                    <div style="background: var(--bb-white); padding: 24px 22px; border-radius: 18px; box-shadow: var(--bb-shadow-sm); text-align: center;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--bb-light-pink); color: var(--bb-deep-red); display: grid; place-items: center; font-size: 20px; margin: 0 auto 14px;"><i class="fa-solid fa-location-dot"></i></div>
+                        <h3 style="font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 800; color: var(--bb-dark-text); margin-bottom: 8px; text-transform: uppercase;">Shahfaisal</h3>
+                        <p style="font-size: 12px; color: var(--bb-soft-text); margin: 0;">Plot 64, Ibrahim Residency</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div style="background: var(--bb-white); padding: 24px 22px; border-radius: 18px; box-shadow: var(--bb-shadow-sm); text-align: center;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--bb-light-pink); color: var(--bb-deep-red); display: grid; place-items: center; font-size: 20px; margin: 0 auto 14px;"><i class="fa-solid fa-location-dot"></i></div>
+                        <h3 style="font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 800; color: var(--bb-dark-text); margin-bottom: 8px; text-transform: uppercase;">DHA Phase 6</h3>
+                        <p style="font-size: 12px; color: var(--bb-soft-text); margin: 0;">123 Baker Street</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div style="background: var(--bb-white); padding: 24px 22px; border-radius: 18px; box-shadow: var(--bb-shadow-sm); text-align: center;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--bb-light-pink); color: var(--bb-deep-red); display: grid; place-items: center; font-size: 20px; margin: 0 auto 14px;"><i class="fa-solid fa-location-dot"></i></div>
+                        <h3 style="font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 800; color: var(--bb-dark-text); margin-bottom: 8px; text-transform: uppercase;">Gulshan</h3>
+                        <p style="font-size: 12px; color: var(--bb-soft-text); margin: 0;">Plot 45, Block 13-D</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div style="background: var(--bb-white); padding: 24px 22px; border-radius: 18px; box-shadow: var(--bb-shadow-sm); text-align: center;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--bb-light-pink); color: var(--bb-deep-red); display: grid; place-items: center; font-size: 20px; margin: 0 auto 14px;"><i class="fa-solid fa-location-dot"></i></div>
+                        <h3 style="font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 800; color: var(--bb-dark-text); margin-bottom: 8px; text-transform: uppercase;">Clifton</h3>
+                        <p style="font-size: 12px; color: var(--bb-soft-text); margin: 0;">Shop 12, Boat Basin</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- SOCIAL MEDIA -->
+    <section style="padding: 60px 0;">
+        <div class="container">
+            <div class="bb-section-heading text-center">
+                <p class="bb-section-label">Follow Us</p>
+                <h2>Stay Connected</h2>
+                <p>Follow us on social media for updates, offers and delicious posts.</p>
+            </div>
+
+            <div class="bb-social-wrap">
+                <a href="#" class="bb-social-card" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="bb-social-card" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="bb-social-card" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://wa.me/923001234567" class="bb-social-card" aria-label="WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="#" class="bb-social-card" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="bb-social-card" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA -->
+    <section class="bb-cta">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <p class="bb-section-label">Have a Question?</p>
+                    <h2 class="bb-cta-title">
+                        Let's Make Something <span>Delicious Together!</span>
+                    </h2>
+                    <p class="bb-cta-text">
+                        Have a custom cake idea or want to know more
+                        about our products? We'd love to hear from you.
+                    </p>
+                </div>
+                <div class="col-lg-4 text-lg-end text-center">
+                    <a href="contact.html" class="btn bb-btn-primary" style="padding:14px 28px;border-radius:30px;font-size:14px;font-weight:700;background:#B21E29;color:#fff;border:2px solid #B21E29;display:inline-flex;align-items:center;gap:8px;">
+                        Contact Us <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="bb-footer">
+        <div class="container">
+            <div class="row g-5 pb-5">
+                <div class="col-lg-4">
+                    <a href="index.html" class="bb-footer-logo">
+                        <img src="images/logo.png" alt="Bakerz Bite Logo">
+                        <span>Bakerz Bite</span>
+                    </a>
+                    <p class="bb-footer-text">
+                        Freshly baked happiness, one delicious bite at a time.
+                    </p>
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="#" class="bb-social"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="bb-social"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="bb-social"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h3 class="bb-footer-title">Quick Links</h3>
+                    <a href="index.html" class="bb-footer-link">Home</a>
+                    <a href="about.html" class="bb-footer-link">About Us</a>
+                    <a href="menu.html" class="bb-footer-link">Our Menu</a>
+                    <a href="merchandise.html" class="bb-footer-link">Merchandise</a>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h3 class="bb-footer-title">Explore</h3>
+                    <a href="offers.html" class="bb-footer-link">Offers</a>
+                    <a href="gallery.html" class="bb-footer-link">Gallery</a>
+                    <a href="feedback.html" class="bb-footer-link">Feedback</a>
+                    <a href="faq.html" class="bb-footer-link">FAQ</a>
+                </div>
+
+                <div class="col-lg-4">
+                    <h3 class="bb-footer-title">Contact Us</h3>
+                    <p class="bb-footer-contact"><i class="fa-solid fa-location-dot"></i> 123 Baker Street, DHA Phase 6, Karachi</p>
+                    <p class="bb-footer-contact"><i class="fa-solid fa-phone"></i> 021-111-022-022</p>
+                    <p class="bb-footer-contact"><i class="fa-solid fa-envelope"></i> hello@bakerzbite.com</p>
+                </div>
+            </div>
+            <div class="bb-footer-bottom text-center">
+                <p>© 2026 Bakerz Bite. All Rights Reserved. | Where Smiles Are Served Daily.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- FLOATING BUTTONS -->
+    <a href="https://wa.me/923001234567" class="bb-float bb-whatsapp" target="_blank" aria-label="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <button class="bb-float bb-scroll-top" id="scrollTopBtn" aria-label="Scroll to Top">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
+
+    <!-- BOTTOM TICKER -->
+    <div class="bb-ticker">
+        <div class="bb-ticker-track" id="tickerTrack"></div>
+    </div>
+
+
+    <!-- CART MODAL -->
+    <div class="modal fade bb-cart-modal" id="cartModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Your Shopping Bag
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="cartModalBody">
+                    <!-- Cart items will be dynamically added here -->
+                </div>
+                <div class="modal-footer">
+                    <div class="bb-cart-total">
+                        Total: <strong id="cartTotalPrice">Rs. 0</strong>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; width: 100%; justify-content: center;">
+                        <button type="button" class="bb-cart-clear-btn" id="clearCartBtn">
+                            <i class="fa-solid fa-trash"></i> Clear Cart
+                        </button>
+                        <button type="button" class="bb-cart-checkout-btn" id="checkoutBtn">
+                            Checkout <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- OUR LOCATIONS MODAL -->
+    <div class="modal fade" id="signinModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius:20px; border:none;">
+                <div class="modal-header" style="background:#B21E29; color:#fff; border-radius:20px 20px 0 0;">
+                    <h5 class="modal-title"><i class="fa-solid fa-location-dot"></i> Our Locations</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p style="color:#76565A; font-size:14px; margin-bottom:15px;">Visit us at any of our locations:</p>
+                    <div style="padding:12px; background:#fdf1f2; border-radius:12px; margin-bottom:10px;">
+                        <strong style="color:#B21E29; font-size:14px;">Bakerz Bite Shahfaisal</strong>
+                        <p style="font-size:13px; color:#76565A; margin:4px 0 0;">Plot 64, Ibrahim Residency, Main Alamgir Road</p>
+                    </div>
+                    <div style="padding:12px; background:#fdf1f2; border-radius:12px; margin-bottom:10px;">
+                        <strong style="color:#B21E29; font-size:14px;">Bakerz Bite DHA Phase 6</strong>
+                        <p style="font-size:13px; color:#76565A; margin:4px 0 0;">123 Baker Street, DHA Phase 6</p>
+                    </div>
+                    <div style="padding:12px; background:#fdf1f2; border-radius:12px; margin-bottom:10px;">
+                        <strong style="color:#B21E29; font-size:14px;">Bakerz Bite Gulshan</strong>
+                        <p style="font-size:13px; color:#76565A; margin:4px 0 0;">Plot 45, Block 13-D, Gulshan-e-Iqbal</p>
+                    </div>
+                    <div style="padding:12px; background:#fdf1f2; border-radius:12px;">
+                        <strong style="color:#B21E29; font-size:14px;">Bakerz Bite Clifton</strong>
+                        <p style="font-size:13px; color:#76565A; margin:4px 0 0;">Shop 12, Boat Basin, Clifton Block 5</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    (function () {
+        "use strict";
+
+        /* =========================================================
+           TICKER
+        ========================================================= */
+        function initTicker() {
+            const track = document.getElementById("tickerTrack");
+            if (!track) return;
+            let locationText = "Karachi, Pakistan";
+            function buildContent(loc) {
+                const now = new Date();
+                const dateStr = now.toLocaleDateString("en-PK", { weekday: "long", day: "2-digit", month: "long", year: "numeric" });
+                const timeStr = now.toLocaleTimeString("en-PK", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+                return `
+                    <span><i class="fa-solid fa-calendar-days"></i> <strong>Date:</strong> ${dateStr}</span>
+                    <span><i class="fa-solid fa-clock"></i> <strong>Time:</strong> ${timeStr}</span>
+                    <span><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> ${loc}</span>
+                    <span><i class="fa-solid fa-envelope"></i> Get in touch — We'd love to hear from you!</span>
+                `;
+            }
+            function refresh() { track.innerHTML = buildContent(locationText) + buildContent(locationText); }
+            refresh();
+            setInterval(refresh, 1000);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (pos) {
+                        const lat = pos.coords.latitude.toFixed(3);
+                        const lon = pos.coords.longitude.toFixed(3);
+                        locationText = `Lat ${lat}, Lon ${lon}`;
+                        refresh();
+                    },
+                    function () {},
+                    { timeout: 8000 }
+                );
+            }
+        }
+
+        /* =========================================================
+           LOCATION POPUP
+        ========================================================= */
+        function initLocationPopup() {
+            const popup = document.getElementById("locPopup");
+            if (!popup) return;
+
+            if (!sessionStorage.getItem("bb_location_chosen")) {
+                setTimeout(() => popup.classList.add("show"), 300);
+            }
+
+            const toggleBtns = popup.querySelectorAll(".bb-order-toggle button");
+            const question = document.getElementById("locQuestion");
+            toggleBtns.forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    toggleBtns.forEach(b => b.classList.remove("active"));
+                    this.classList.add("active");
+                    const mode = this.getAttribute("data-mode");
+                    question.textContent = mode === "pickup"
+                        ? "Which outlet would you like to pick-up from?"
+                        : "Which outlet would you like to order from?";
+                });
+            });
+
+            const branchSelect = document.getElementById("branchSelect");
+            const branchName = document.getElementById("branchName");
+            const branchAddress = document.getElementById("branchAddress");
+            const branchDirections = document.getElementById("branchDirections");
+
+            function updateBranchDetails() {
+                const opt = branchSelect.options[branchSelect.selectedIndex];
+                branchName.textContent = opt.getAttribute("data-name");
+                branchAddress.textContent = "Address: " + opt.getAttribute("data-address");
+                const lat = opt.getAttribute("data-lat");
+                const lng = opt.getAttribute("data-lng");
+                branchDirections.href = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
+            }
+            branchSelect.addEventListener("change", updateBranchDetails);
+            updateBranchDetails();
+
+            const useBtn = document.getElementById("useCurrentLocBtn");
+            useBtn.addEventListener("click", function () {
+                if (!navigator.geolocation) { alert("Geolocation not supported."); return; }
+                useBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Locating...';
+                useBtn.disabled = true;
+                navigator.geolocation.getCurrentPosition(
+                    function (pos) {
+                        const lat = pos.coords.latitude;
+                        const lng = pos.coords.longitude;
+                        let nearest = null, minDist = Infinity;
+                        branchSelect.querySelectorAll("option").forEach(function (opt) {
+                            const bLat = parseFloat(opt.getAttribute("data-lat"));
+                            const bLng = parseFloat(opt.getAttribute("data-lng"));
+                            const d = Math.sqrt(Math.pow(lat - bLat, 2) + Math.pow(lng - bLng, 2));
+                            if (d < minDist) { minDist = d; nearest = opt.value; }
+                        });
+                        if (nearest) { branchSelect.value = nearest; updateBranchDetails(); }
+                        useBtn.innerHTML = '<i class="fa-solid fa-check"></i> Location Detected';
+                        setTimeout(function () {
+                            useBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Use Current Location';
+                            useBtn.disabled = false;
+                        }, 2000);
+                    },
+                    function () {
+                        alert("Unable to get location. Select branch manually.");
+                        useBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Use Current Location';
+                        useBtn.disabled = false;
+                    },
+                    { timeout: 10000 }
+                );
+            });
+
+            const selectBtn = document.getElementById("locSelectBtn");
+            const topbarBranchName = document.getElementById("topbarBranchName");
+            const topbarLocationPill = document.getElementById("topbarLocationPill");
+
+            selectBtn.addEventListener("click", function () {
+                const opt = branchSelect.options[branchSelect.selectedIndex];
+                const name = opt.getAttribute("data-name");
+                sessionStorage.setItem("bb_location_chosen", "yes");
+                sessionStorage.setItem("bb_location_name", name);
+                if (topbarBranchName) topbarBranchName.textContent = name;
+                popup.classList.remove("show");
+            });
+
+            if (sessionStorage.getItem("bb_location_chosen")) {
+                const savedName = sessionStorage.getItem("bb_location_name");
+                if (topbarBranchName && savedName) topbarBranchName.textContent = savedName;
+            }
+
+            if (topbarLocationPill) {
+                topbarLocationPill.addEventListener("click", function () {
+                    popup.classList.add("show");
+                });
+            }
+        }
+
+        /* =========================================================
+           CART — Badge, Add, Open, Render, Remove, Clear
+        ========================================================= */
+        function getCart() {
+            try {
+                return JSON.parse(localStorage.getItem("bb_cart") || "[]");
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveCart(items) {
+            try {
+                localStorage.setItem("bb_cart", JSON.stringify(items));
+            } catch (e) {}
+        }
+
+        function updateCartBadge() {
+            const items = getCart();
+            document.querySelectorAll(".bb-cart-count").forEach(function (el) {
+                el.textContent = items.length;
+            });
+        }
+
+        function addToCart(name, price, qty, notes) {
+            const items = getCart();
+            for (let i = 0; i < qty; i++) {
+                items.push({ name: name, price: price, notes: notes || "", time: Date.now() });
+            }
+            saveCart(items);
+            updateCartBadge();
+            showToast(name + " added to cart!");
+        }
+
+        function removeFromCart(index) {
+            const items = getCart();
+            if (index < 0 || index >= items.length) return;
+            const removed = items.splice(index, 1);
+            saveCart(items);
+            updateCartBadge();
+            renderCartModal();
+            if (removed[0]) showToast(removed[0].name + " removed from cart!");
+        }
+
+        function clearCart() {
+            if (getCart().length === 0) {
+                showToast("Cart is already empty!");
+                return;
+            }
+            saveCart([]);
+            updateCartBadge();
+            renderCartModal();
+            showToast("Cart cleared successfully!");
+        }
+
+        function renderCartModal() {
+            const body = document.getElementById("cartModalBody");
+            const totalPrice = document.getElementById("cartTotalPrice");
+            if (!body) return;
+
+            const items = getCart();
+
+            if (items.length === 0) {
+                body.innerHTML = `
+                    <div class="bb-cart-empty">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <h4>Your cart is empty</h4>
+                        <p>Add some delicious items from our menu!</p>
+                    </div>
+                `;
+                if (totalPrice) totalPrice.textContent = "Rs. 0";
+                return;
+            }
+
+            let html = "";
+            let total = 0;
+
+            items.forEach(function (item, index) {
+                total += item.price;
+                html += `
+                    <div class="bb-cart-item">
+                        <div class="bb-cart-item-icon">
+                            <i class="fa-solid fa-cake-candles"></i>
+                        </div>
+                        <div class="bb-cart-item-info">
+                            <h5>${item.name}</h5>
+                            <p>Rs. ${item.price.toLocaleString()}</p>
+                        </div>
+                        <button class="bb-cart-item-remove" onclick="window.bbRemoveCartItem(${index})" aria-label="Remove">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            body.innerHTML = html;
+            if (totalPrice) totalPrice.textContent = "Rs. " + total.toLocaleString();
+        }
+
+        window.bbRemoveCartItem = function (index) {
+            removeFromCart(index);
+        };
+
+        function initCartModal() {
+            const openBtn = document.getElementById("openCartBtn");
+            const clearBtn = document.getElementById("clearCartBtn");
+            const checkoutBtn = document.getElementById("checkoutBtn");
+
+            if (openBtn) {
+                openBtn.addEventListener("click", function () {
+                    renderCartModal();
+                    const modal = new bootstrap.Modal(document.getElementById("cartModal"));
+                    modal.show();
+                });
+            }
+
+            if (clearBtn) clearBtn.addEventListener("click", clearCart);
+
+            if (checkoutBtn) {
+                checkoutBtn.addEventListener("click", function () {
+                    const items = getCart();
+                    if (items.length === 0) {
+                        showToast("Your cart is empty!");
+                        return;
+                    }
+                    showToast("Order placed! Thank you — Total: Rs. " + items.reduce((s, i) => s + i.price, 0).toLocaleString());
+                    setTimeout(function () {
+                        clearCart();
+                        const modal = bootstrap.Modal.getInstance(document.getElementById("cartModal"));
+                        if (modal) modal.hide();
+                    }, 1500);
+                });
+            }
+        }
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+        let toastEl = null, toastTimer = null;
+        function showToast(msg) {
+            if (!toastEl) {
+                toastEl = document.createElement("div");
+                toastEl.className = "bb-toast";
+                toastEl.innerHTML = '<i class="fa-solid fa-circle-check"></i><span></span>';
+                document.body.appendChild(toastEl);
+            }
+            toastEl.querySelector("span").textContent = msg;
+            toastEl.classList.add("show");
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2500);
+        }
+
+        /* =========================================================
+           CONTACT FORM — localStorage save + Saved messages view
+        ========================================================= */
+        function getSubjectLabel(key) {
+            const map = {
+                "general": "General Inquiry",
+                "order": "Order Related",
+                "custom-cake": "Custom Cake Order",
+                "bulk": "Bulk Order / Catering",
+                "complaint": "Complaint",
+                "feedback": "Feedback / Suggestion",
+                "careers": "Careers",
+                "other": "Other"
+            };
+            return map[key] || key;
+        }
+
+        function renderSavedMessages() {
+            const wrap = document.getElementById("savedMsgWrap");
+            const list = document.getElementById("savedMsgList");
+            const countEl = document.getElementById("savedMsgCount");
+            if (!wrap || !list) return;
+
+            let messages = [];
+            try {
+                messages = JSON.parse(localStorage.getItem("bb_contact") || "[]");
+            } catch (e) {
+                messages = [];
+            }
+
+            if (countEl) countEl.textContent = messages.length;
+
+            if (messages.length === 0) {
+                wrap.classList.remove("show");
+                list.innerHTML = "";
+                return;
+            }
+
+            wrap.classList.add("show");
+
+            const reversed = messages.slice().reverse();
+
+            list.innerHTML = reversed.map(function (msg, idx) {
+                const originalIndex = messages.length - 1 - idx;
+                const time = msg.time ? new Date(msg.time).toLocaleString("en-PK", {
+                    day: "2-digit", month: "short", year: "numeric",
+                    hour: "2-digit", minute: "2-digit"
+                }) : "";
+                const subjectLabel = getSubjectLabel(msg.subject);
+                return `
+                    <div class="bb-saved-msg-item">
+                        <button class="msg-delete" onclick="window.bbDeleteMsg(${originalIndex})" aria-label="Delete">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <div class="msg-head">
+                            <span class="msg-name">
+                                <i class="fa-solid fa-user" style="color: var(--bb-deep-red); margin-right: 6px;"></i>
+                                ${msg.name || "Unknown"}
+                            </span>
+                            <span class="msg-subject">${subjectLabel}</span>
+                        </div>
+                        <p class="msg-text">${(msg.message || "").replace(/</g, "&lt;")}</p>
+                        <span class="msg-time">
+                            <i class="fa-solid fa-clock"></i> ${time}
+                            ${msg.email ? ' • <i class="fa-solid fa-envelope"></i> ' + msg.email : ''}
+                        </span>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        window.bbDeleteMsg = function (index) {
+            let messages = [];
+            try {
+                messages = JSON.parse(localStorage.getItem("bb_contact") || "[]");
+            } catch (e) { return; }
+            if (index < 0 || index >= messages.length) return;
+            messages.splice(index, 1);
+            try {
+                localStorage.setItem("bb_contact", JSON.stringify(messages));
+            } catch (e) {}
+            renderSavedMessages();
+            showToast("Message deleted!");
+        };
+
+        function initContactForm() {
+            const form = document.getElementById("contactForm");
+            const successMsg = document.getElementById("successMsg");
+            if (!form) return;
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                const contactData = {
+                    name: document.getElementById("ctName").value.trim(),
+                    email: document.getElementById("ctEmail").value.trim(),
+                    phone: document.getElementById("ctPhone").value.trim(),
+                    subject: document.getElementById("ctSubject").value,
+                    message: document.getElementById("ctMessage").value.trim(),
+                    time: new Date().toISOString()
+                };
+
+                try {
+                    const allMessages = JSON.parse(localStorage.getItem("bb_contact") || "[]");
+                    allMessages.push(contactData);
+                    localStorage.setItem("bb_contact", JSON.stringify(allMessages));
+                    console.log("Contact message saved:", contactData);
+                } catch (err) {
+                    console.error("Failed to save message:", err);
+                }
+
+                form.style.display = "none";
+                successMsg.classList.add("show");
+                successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+
+                renderSavedMessages();
+                showToast("Message saved & sent successfully!");
+
+                setTimeout(function () {
+                    form.reset();
+                    form.style.display = "";
+                    successMsg.classList.remove("show");
+                }, 4000);
+            });
+
+            const clearAll = document.getElementById("clearAllMsgs");
+            if (clearAll) {
+                clearAll.addEventListener("click", function () {
+                    if (!confirm("Are you sure you want to delete ALL saved messages?")) return;
+                    try {
+                        localStorage.removeItem("bb_contact");
+                    } catch (e) {}
+                    renderSavedMessages();
+                    showToast("All messages cleared!");
+                });
+            }
+        }
+
+        /* =========================================================
+           DROPDOWN MENU
+        ========================================================= */
+        function initDropdownMenu() {
+            const toggle = document.getElementById("bbMenuToggle");
+            const panel = document.getElementById("bbDropdownPanel");
+            const overlay = document.getElementById("bbDropdownOverlay");
+            const closeBtn = document.getElementById("bbDropdownClose");
+
+            if (!toggle || !panel) return;
+
+            function openMenu() {
+                panel.classList.add("show");
+                overlay.classList.add("show");
+                document.body.style.overflow = "hidden";
+            }
+            function closeMenu() {
+                panel.classList.remove("show");
+                overlay.classList.remove("show");
+                document.body.style.overflow = "";
+            }
+
+            toggle.addEventListener("click", openMenu);
+            closeBtn.addEventListener("click", closeMenu);
+            overlay.addEventListener("click", closeMenu);
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape") closeMenu();
+            });
+        }
+
+        /* =========================================================
+           SCROLL TOP
+        ========================================================= */
+        function initScrollTop() {
+            const btn = document.getElementById("scrollTopBtn");
+            if (!btn) return;
+            window.addEventListener("scroll", function () {
+                btn.classList.toggle("show", window.scrollY > 400);
+            });
+            btn.addEventListener("click", function () {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        }
+
+        /* =========================================================
+           INIT
+        ========================================================= */
+        document.addEventListener("DOMContentLoaded", function () {
+            initTicker();
+            initLocationPopup();
+            updateCartBadge();
+            initCartModal();
+            initContactForm();
+            renderSavedMessages();
+            initDropdownMenu();
+            initScrollTop();
+            console.log("📞 Bakerz Bite Contact Page Loaded! Cart & Saved Messages ready.");
+        });
+
+    })();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,3175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Bakerz Bite - Our Menu. Freshly Baked with Love. Premium bakery & café.">
+    <title>Our Menu | Bakerz Bite</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+    /* =========================================================
+       BAKERZ BITE - MENU PAGE
+    ========================================================= */
+    :root {
+        --bb-light-pink: #F7D0D8;
+        --bb-deep-red: #B21E29;
+        --bb-soft-yellow: #F9E6B5;
+        --bb-dusty-rose: #D68F9A;
+        --bb-pale-cream: #FDF5E6;
+        --bb-white: #ffffff;
+        --bb-dark-text: #4A2025;
+        --bb-soft-text: #76565A;
+        --bb-shadow: 0 10px 30px rgba(178, 30, 41, 0.10);
+        --bb-shadow-sm: 0 4px 15px rgba(178, 30, 41, 0.08);
+        --bb-transition: 0.3s ease;
+        --bb-radius: 20px;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--bb-pale-cream);
+        background-image: url('images/pattern-light.png');
+        background-repeat: repeat;
+        background-size: 280px;
+        background-attachment: fixed;
+        color: var(--bb-dark-text);
+        line-height: 1.7;
+        padding-bottom: 50px;
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+    h1, h2, h3, h4, h5, h6 { font-family: "DM Serif Display", serif; line-height: 1.2; }
+    a { text-decoration: none; }
+    section { padding: 80px 0; position: relative; }
+    .container { width: min(1600px, 96%); margin: auto; }
+
+    .bb-section-heading { max-width: 700px; margin: 0 auto 50px; }
+    .bb-section-heading h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        color: var(--bb-deep-red);
+        margin-bottom: 15px;
+    }
+    .bb-section-heading p { color: var(--bb-soft-text); font-size: 15px; }
+    .bb-section-label {
+        color: var(--bb-deep-red);
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+
+    /* LOCATION POPUP */
+    .bb-loc-popup {
+        position: fixed;
+        inset: 0;
+        background: rgba(74, 32, 37, 0.55);
+        z-index: 10800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s ease, visibility 0.4s ease;
+        backdrop-filter: blur(6px);
+    }
+    .bb-loc-popup.show { opacity: 1; visibility: visible; }
+    .bb-loc-card {
+        background: var(--bb-white);
+        border-radius: 24px;
+        width: 100%;
+        max-width: 520px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(74, 32, 37, 0.40);
+        transform: translateY(30px) scale(0.96);
+        transition: transform 0.4s ease;
+        max-height: 94vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .bb-loc-popup.show .bb-loc-card { transform: translateY(0) scale(1); }
+    .bb-loc-header {
+        background: var(--bb-deep-red);
+        padding: 30px 20px 25px;
+        text-align: center;
+    }
+    .bb-loc-header img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        background: var(--bb-white);
+        border-radius: 50%;
+        padding: 8px;
+        border: 4px solid var(--bb-white);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
+    }
+    .bb-loc-body { padding: 28px 30px 25px; overflow-y: auto; }
+    .bb-loc-title {
+        font-family: "Poppins", sans-serif;
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--bb-dark-text);
+        text-align: center;
+        margin-bottom: 22px;
+    }
+    .bb-order-toggle {
+        display: flex;
+        background: #f4f0ea;
+        border-radius: 40px;
+        padding: 5px;
+        max-width: 340px;
+        margin: 0 auto 20px;
+        border: 1px solid rgba(178, 30, 41, 0.08);
+    }
+    .bb-order-toggle button {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 12px 20px;
+        border-radius: 40px;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--bb-soft-text);
+        cursor: pointer;
+        transition: var(--bb-transition);
+        font-family: inherit;
+    }
+    .bb-order-toggle button.active {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        box-shadow: 0 6px 15px rgba(178, 30, 41, 0.25);
+    }
+    .bb-loc-question {
+        text-align: center;
+        font-size: 14px;
+        color: var(--bb-soft-text);
+        margin-bottom: 18px;
+        font-weight: 500;
+    }
+    .bb-loc-use-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto 20px;
+        padding: 13px 22px;
+        background: var(--bb-white);
+        border: 2px solid var(--bb-deep-red);
+        border-radius: 40px;
+        color: var(--bb-deep-red);
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--bb-transition);
+        font-family: inherit;
+    }
+    .bb-loc-use-btn:hover { background: var(--bb-deep-red); color: var(--bb-white); }
+    .bb-loc-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--bb-dark-text);
+        margin-bottom: 8px;
+        display: block;
+    }
+    .bb-loc-select {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid rgba(178, 30, 41, 0.15);
+        border-radius: 14px;
+        font-size: 15px;
+        font-family: inherit;
+        font-weight: 600;
+        color: var(--bb-dark-text);
+        background: var(--bb-white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234A2025' stroke-width='3'><polyline points='6 9 12 15 18 9'/></svg>") no-repeat right 18px center;
+        background-size: 14px;
+        appearance: none;
+        cursor: pointer;
+        margin-bottom: 16px;
+        outline: none;
+    }
+    .bb-branch-details {
+        background: #fdf1f2;
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin-bottom: 22px;
+        border: 1px solid rgba(178, 30, 41, 0.10);
+    }
+    .bb-branch-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+    .bb-branch-icon {
+        width: 40px; height: 40px; flex-shrink: 0;
+        border-radius: 50%;
+        background: var(--bb-light-pink);
+        color: var(--bb-deep-red);
+        display: grid; place-items: center;
+        font-size: 16px;
+    }
+    .bb-branch-label {
+        font-size: 11px; font-weight: 800;
+        color: var(--bb-deep-red);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+    }
+    .bb-branch-name { font-size: 14px; font-weight: 700; color: var(--bb-dark-text); margin: 0; }
+    .bb-branch-address { font-size: 13px; color: var(--bb-soft-text); margin: 0 0 12px 52px; }
+    .bb-branch-directions {
+        display: inline-flex; align-items: center; gap: 7px;
+        margin-left: 52px;
+        color: var(--bb-deep-red);
+        font-size: 13px; font-weight: 700;
+    }
+    .bb-loc-select-btn {
+        width: 100%;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border: none;
+        padding: 17px;
+        border-radius: 40px;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+        font-family: inherit;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 20px rgba(178, 30, 41, 0.25);
+    }
+
+    /* NAVBAR */
+    .bb-navbar {
+        background: rgba(255, 255, 255, 0.98);
+        padding: 8px 0;
+        box-shadow: 0 2px 15px rgba(178, 30, 41, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 1030;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(178, 30, 41, 0.06);
+        width: 100%;
+    }
+    .bb-nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        flex-wrap: nowrap;
+        min-height: 60px;
+        width: 100%;
+    }
+    .bb-nav-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        min-width: 0;
+    }
+    .bb-nav-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 40px;
+        background: var(--bb-pale-cream);
+        color: var(--bb-dark-text);
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid rgba(178, 30, 41, 0.08);
+        transition: var(--bb-transition);
+        white-space: nowrap;
+        cursor: pointer;
+        max-width: 100%;
+        overflow: hidden;
+    }
+    .bb-nav-pill:hover { background: var(--bb-light-pink); }
+    .bb-nav-pill i { color: var(--bb-deep-red); font-size: 15px; flex-shrink: 0; }
+    .bb-nav-pill .bb-pill-label {
+        font-size: 10px;
+        color: var(--bb-soft-text);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+        display: block;
+        line-height: 1;
+    }
+    .bb-nav-pill .bb-pill-value {
+        color: var(--bb-deep-red);
+        font-weight: 700;
+        font-size: 12px;
+        display: block;
+        line-height: 1.2;
+        max-width: 110px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .bb-nav-pill .bb-chev { font-size: 10px; color: var(--bb-soft-text); flex-shrink: 0; }
+
+    .bb-nav-center {
+        flex-shrink: 0;
+        text-align: center;
+        position: relative;
+        z-index: 1035;
+    }
+    .bb-nav-center .bb-logo { display: block; position: relative; }
+    .bb-nav-center .bb-logo img {
+        width: 90px;
+        height: 90px;
+        object-fit: contain;
+        transition: var(--bb-transition);
+        filter: drop-shadow(0 6px 16px rgba(178, 30, 41, 0.20));
+        background: var(--bb-white);
+        border-radius: 50%;
+        padding: 4px;
+        margin-top: 5px;
+        margin-bottom: -40px;
+    }
+    .bb-nav-center .bb-logo:hover img { transform: scale(1.05); }
+
+    .bb-nav-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+    }
+    .bb-nav-locations-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 40px;
+        background: var(--bb-white);
+        color: var(--bb-dark-text);
+        font-size: 13px;
+        font-weight: 700;
+        border: 1.5px solid rgba(74, 32, 37, 0.15);
+        transition: var(--bb-transition);
+        white-space: nowrap;
+        cursor: pointer;
+        font-family: inherit;
+        box-shadow: 0 2px 8px rgba(74, 32, 37, 0.04);
+    }
+    .bb-nav-locations-btn:hover {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border-color: var(--bb-deep-red);
+        transform: translateY(-2px);
+    }
+    .bb-nav-cart {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border-radius: 50%;
+        justify-content: center;
+        background: var(--bb-white);
+        border: 1.5px solid rgba(74, 32, 37, 0.15);
+        color: var(--bb-dark-text);
+        font-size: 17px;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        transition: var(--bb-transition);
+        box-shadow: 0 2px 8px rgba(74, 32, 37, 0.04);
+        flex-shrink: 0;
+    }
+    .bb-nav-cart:hover {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border-color: var(--bb-deep-red);
+        transform: translateY(-2px);
+    }
+    .bb-cart-count {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        font-size: 10px;
+        font-weight: 800;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--bb-white);
+    }
+    .bb-nav-divider {
+        width: 1.5px;
+        height: 30px;
+        background: rgba(74, 32, 37, 0.15);
+        margin: 0 4px;
+    }
+    .bb-menu-toggle {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(74, 32, 37, 0.15);
+        background: var(--bb-white);
+        color: var(--bb-dark-text);
+        font-size: 17px;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition: var(--bb-transition);
+        box-shadow: 0 2px 8px rgba(74, 32, 37, 0.04);
+        flex-shrink: 0;
+    }
+    .bb-menu-toggle:hover {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border-color: var(--bb-deep-red);
+        transform: translateY(-2px);
+    }
+
+    /* DROPDOWN MENU PANEL */
+    .bb-dropdown-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(74, 32, 37, 0.50);
+        z-index: 1040;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.35s ease, visibility 0.35s ease;
+        backdrop-filter: blur(4px);
+    }
+    .bb-dropdown-overlay.show { opacity: 1; visibility: visible; }
+    .bb-dropdown-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 400px;
+        max-width: 90vw;
+        height: 100vh;
+        background: var(--bb-white);
+        z-index: 1045;
+        transform: translateX(100%);
+        transition: transform 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        box-shadow: -10px 0 40px rgba(74, 32, 37, 0.20);
+        overflow-y: auto;
+    }
+    .bb-dropdown-panel.show { transform: translateX(0); }
+    .bb-dropdown-header {
+        padding: 25px 30px;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+    }
+    .bb-dropdown-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 24px;
+        margin: 0;
+        color: var(--bb-white);
+    }
+    .bb-dropdown-close {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255, 255, 255, 0.15);
+        color: var(--bb-white);
+        font-size: 18px;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition: var(--bb-transition);
+    }
+    .bb-dropdown-close:hover {
+        background: var(--bb-white);
+        color: var(--bb-deep-red);
+    }
+    .bb-dropdown-body {
+        padding: 25px 30px 35px;
+        flex: 1;
+    }
+    .bb-dropdown-section-title {
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--bb-soft-text);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+    .bb-dropdown-section-title:not(:first-child) { margin-top: 30px; }
+    .bb-dropdown-list { list-style: none; padding: 0; margin: 0; }
+    .bb-dropdown-list li a {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 16px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--bb-dark-text);
+        border-radius: 12px;
+        transition: var(--bb-transition);
+        margin-bottom: 4px;
+    }
+    .bb-dropdown-list li a:hover,
+    .bb-dropdown-list li a.active {
+        background: var(--bb-light-pink);
+        color: var(--bb-deep-red);
+        padding-left: 22px;
+    }
+    .bb-dropdown-list li a i {
+        color: var(--bb-deep-red);
+        width: 22px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    /* PAGE HEADER */
+    .bb-page-header {
+        position: relative;
+        width: min(1700px, 98%);
+        margin: 25px auto 0;
+        min-height: 340px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        border-radius: 30px;
+        background:
+            linear-gradient(rgba(178, 30, 41, 0.75), rgba(178, 30, 41, 0.75)),
+            url('images/hero-1.png') center/cover no-repeat;
+        padding: 60px 0;
+        box-shadow: 0 15px 40px rgba(178, 30, 41, 0.12);
+        text-align: center;
+    }
+    .bb-page-header-inner {
+        position: relative;
+        z-index: 2;
+        width: min(1580px, 96%);
+        margin: 0 auto;
+    }
+    .bb-page-header h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        color: var(--bb-white);
+        font-weight: 400;
+        margin-bottom: 12px;
+        letter-spacing: -1px;
+    }
+    .bb-page-header p {
+        color: rgba(255, 255, 255, 0.92);
+        font-size: 17px;
+        max-width: 600px;
+        margin: 0 auto 20px;
+    }
+    .bb-breadcrumb {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.90);
+    }
+    .bb-breadcrumb a {
+        color: var(--bb-soft-yellow);
+        font-weight: 600;
+        transition: var(--bb-transition);
+    }
+    .bb-breadcrumb a:hover { text-decoration: underline; }
+    .bb-breadcrumb span { color: rgba(255, 255, 255, 0.70); }
+
+    /* FILTERS */
+    .bb-filters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 50px;
+    }
+    .bb-filter-btn {
+        padding: 12px 26px;
+        border-radius: 40px;
+        border: 2px solid rgba(178, 30, 41, 0.20);
+        background: var(--bb-white);
+        color: var(--bb-deep-red);
+        font-size: 14px;
+        font-weight: 700;
+        transition: var(--bb-transition);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: inherit;
+    }
+    .bb-filter-btn:hover {
+        background: var(--bb-light-pink);
+        border-color: var(--bb-deep-red);
+        transform: translateY(-2px);
+    }
+    .bb-filter-btn.active {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border-color: var(--bb-deep-red);
+        box-shadow: 0 8px 20px rgba(178, 30, 41, 0.25);
+    }
+    .bb-filter-btn i { font-size: 15px; }
+
+    /* PRODUCT CARDS */
+    .bb-uk-card {
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: var(--bb-radius);
+        overflow: hidden;
+        box-shadow: var(--bb-shadow-sm);
+        border: 1px solid rgba(178, 30, 41, 0.06);
+        transition: var(--bb-transition);
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        backdrop-filter: blur(5px);
+        height: 100%;
+    }
+    .bb-uk-card:hover { transform: translateY(-6px); box-shadow: var(--bb-shadow); }
+
+    .bb-uk-card-head {
+        padding: 20px 18px 15px;
+        background: var(--bb-white);
+    }
+    .bb-uk-card-head h3 {
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--bb-dark-text);
+        letter-spacing: 0.6px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        text-align: left;
+    }
+    .bb-size-pills { display: flex; gap: 8px; }
+    .bb-size-pills span {
+        padding: 5px 14px;
+        font-size: 11px;
+        font-weight: 800;
+        border-radius: 20px;
+        border: 1.5px solid rgba(178, 30, 41, 0.25);
+        color: var(--bb-deep-red);
+        background: var(--bb-white);
+        transition: var(--bb-transition);
+        letter-spacing: 0.5px;
+        cursor: pointer;
+    }
+    .bb-size-pills span.active {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border-color: var(--bb-deep-red);
+    }
+
+    .bb-uk-card-img {
+        position: relative;
+        height: 250px;
+        overflow: hidden;
+        background: var(--bb-pale-cream);
+    }
+    .bb-uk-card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    .bb-uk-card:hover .bb-uk-card-img img { transform: scale(1.05); }
+
+    .bb-new-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: var(--bb-soft-yellow);
+        color: var(--bb-deep-red);
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        z-index: 5;
+    }
+
+    .bb-uk-card-body {
+        padding: 18px 18px 22px;
+        background: var(--bb-white);
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .bb-uk-card-body p {
+        font-size: 13px;
+        color: var(--bb-soft-text);
+        margin: 0 0 15px;
+        line-height: 1.6;
+        flex-grow: 1;
+    }
+    .bb-uk-card-price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+    }
+    .bb-price-label { font-size: 13px; color: var(--bb-soft-text); font-weight: 500; }
+    .bb-price-label strong { color: var(--bb-deep-red); font-size: 17px; font-weight: 800; }
+    .bb-add-btn {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border: none;
+        padding: 8px 22px;
+        border-radius: 30px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        transition: var(--bb-transition);
+        cursor: pointer;
+        font-family: inherit;
+    }
+    .bb-add-btn:hover { background: #941923; transform: scale(1.05); }
+
+    /* CART MODAL */
+    .bb-cart-modal .modal-content {
+        border-radius: 24px;
+        border: none;
+        overflow: hidden;
+        box-shadow: 0 25px 70px rgba(74, 32, 37, 0.30);
+        max-height: 85vh;
+    }
+    .bb-cart-modal .modal-header {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        padding: 22px 28px;
+        border: none;
+    }
+    .bb-cart-modal .modal-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .bb-cart-modal .btn-close {
+        filter: invert(1) brightness(2);
+        opacity: 0.9;
+    }
+    .bb-cart-modal .modal-body {
+        padding: 24px 28px;
+        overflow-y: auto;
+        max-height: 55vh;
+        background: var(--bb-pale-cream);
+    }
+    .bb-cart-modal .modal-footer {
+        background: var(--bb-white);
+        padding: 20px 28px;
+        border-top: 1px solid rgba(178, 30, 41, 0.10);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+
+    .bb-cart-empty {
+        text-align: center;
+        padding: 40px 20px;
+    }
+    .bb-cart-empty i {
+        font-size: 64px;
+        color: var(--bb-light-pink);
+        margin-bottom: 18px;
+    }
+    .bb-cart-empty h4 {
+        font-family: "Poppins", sans-serif;
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--bb-dark-text);
+        margin-bottom: 8px;
+    }
+    .bb-cart-empty p {
+        font-size: 13px;
+        color: var(--bb-soft-text);
+        margin: 0;
+    }
+
+    .bb-cart-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: var(--bb-white);
+        border-radius: 14px;
+        padding: 12px 14px;
+        margin-bottom: 12px;
+        box-shadow: var(--bb-shadow-sm);
+        border: 1px solid rgba(178, 30, 41, 0.06);
+    }
+    .bb-cart-item-img {
+        width: 70px;
+        height: 70px;
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--bb-pale-cream);
+        flex-shrink: 0;
+        border: 2px solid rgba(178, 30, 41, 0.08);
+    }
+    .bb-cart-item-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    .bb-cart-item-info {
+        flex: 1;
+        min-width: 0;
+    }
+    .bb-cart-item-info h5 {
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--bb-dark-text);
+        margin-bottom: 4px;
+        line-height: 1.3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    .bb-cart-item-info p {
+        font-size: 13px;
+        color: var(--bb-deep-red);
+        font-weight: 800;
+        margin: 0;
+    }
+    .bb-cart-item-info small {
+        display: block;
+        font-size: 11px;
+        color: #b8a9a9;
+        margin-top: 4px;
+        font-weight: 500;
+    }
+    .bb-cart-item-remove {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: none;
+        background: #fdf1f2;
+        color: var(--bb-deep-red);
+        font-size: 14px;
+        cursor: pointer;
+        transition: var(--bb-transition);
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+    }
+    .bb-cart-item-remove:hover {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        transform: scale(1.1);
+    }
+
+    .bb-cart-total {
+        font-family: "Poppins", sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--bb-dark-text);
+    }
+    .bb-cart-total strong {
+        color: var(--bb-deep-red);
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .bb-cart-checkout-btn {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border: none;
+        padding: 14px 28px;
+        border-radius: 40px;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: var(--bb-transition);
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .bb-cart-checkout-btn:hover {
+        background: #941923;
+        transform: translateY(-2px);
+    }
+
+    .bb-cart-clear-btn {
+        background: transparent;
+        color: var(--bb-deep-red);
+        border: 2px solid var(--bb-deep-red);
+        padding: 12px 24px;
+        border-radius: 40px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--bb-transition);
+        font-family: inherit;
+    }
+    .bb-cart-clear-btn:hover {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+    }
+
+    /* CTA */
+    .bb-cta {
+        background: rgba(247, 208, 216, 0.88);
+        border-radius: 30px;
+        width: min(1600px, 98%);
+        margin: 0 auto;
+    }
+    .bb-cta-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        color: var(--bb-deep-red);
+        margin-bottom: 15px;
+    }
+    .bb-cta-title span { color: var(--bb-dusty-rose); }
+    .bb-cta-text { color: var(--bb-soft-text); font-size: 15px; }
+
+    /* FOOTER */
+    .bb-footer {
+        background: rgba(178, 30, 41, 0.96);
+        color: var(--bb-white);
+        padding-top: 60px;
+        margin-top: 40px;
+    }
+    .bb-footer-text {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 14px;
+        max-width: 300px;
+        margin: 15px 0;
+    }
+    .bb-social {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--bb-light-pink);
+        color: var(--bb-deep-red);
+        transition: var(--bb-transition);
+        font-size: 15px;
+    }
+    .bb-social:hover {
+        background: var(--bb-soft-yellow);
+        transform: translateY(-3px);
+    }
+    .bb-footer-title {
+        color: var(--bb-soft-yellow);
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .bb-footer-link {
+        display: block;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 14px;
+        margin-bottom: 10px;
+        transition: var(--bb-transition);
+    }
+    .bb-footer-link:hover { color: var(--bb-soft-yellow); padding-left: 5px; }
+    .bb-footer-contact {
+        display: flex;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+    .bb-footer-contact i { color: var(--bb-soft-yellow); margin-top: 5px; }
+    .bb-footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 20px 0;
+        margin-top: 20px;
+    }
+    .bb-footer-bottom p {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 13px;
+        margin: 0;
+    }
+    .bb-footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--bb-white);
+        font-family: "DM Serif Display", serif;
+        font-size: 24px;
+    }
+    .bb-footer-logo img {
+        width: 65px;
+        height: 65px;
+        object-fit: contain;
+        background: var(--bb-white);
+        border-radius: 50%;
+        padding: 4px;
+    }
+
+    /* FLOATING BUTTONS */
+    .bb-float {
+        position: fixed;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 26px;
+        border: none;
+        cursor: pointer;
+        z-index: 1040;
+        transition: var(--bb-transition);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
+    }
+    .bb-whatsapp {
+        background: #25D366;
+        color: var(--bb-white);
+        bottom: 85px;
+        right: 25px;
+    }
+    .bb-whatsapp:hover { transform: scale(1.10); color: var(--bb-white); }
+    .bb-scroll-top {
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        bottom: 155px;
+        right: 25px;
+        font-size: 20px;
+        opacity: 0;
+        visibility: hidden;
+    }
+    .bb-scroll-top.show { opacity: 1; visibility: visible; }
+
+    /* BOTTOM TICKER */
+    .bb-ticker {
+        position: fixed;
+        bottom: 0;
+        left: 0; right: 0;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        padding: 10px 0;
+        overflow: hidden;
+        z-index: 1035;
+        border-top: 3px solid var(--bb-soft-yellow);
+        font-size: 13px;
+    }
+    .bb-ticker-track {
+        display: inline-block;
+        white-space: nowrap;
+        animation: bbTickerScroll 35s linear infinite;
+        padding-left: 100%;
+    }
+    .bb-ticker-track:hover { animation-play-state: paused; }
+    .bb-ticker span {
+        margin: 0 30px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .bb-ticker i, .bb-ticker strong { color: var(--bb-soft-yellow); }
+    @keyframes bbTickerScroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+
+    /* PRODUCT MODAL */
+    .bb-product-modal .modal-content {
+        border-radius: 24px;
+        border: none;
+        overflow: hidden;
+        box-shadow: 0 25px 70px rgba(74, 32, 37, 0.30);
+    }
+    .bb-modal-row { min-height: 620px; }
+    .bb-modal-img-col {
+        position: relative;
+        background: #f2ede4;
+        overflow: hidden;
+        min-height: 380px;
+    }
+    .bb-modal-img-col img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        position: absolute;
+        inset: 0;
+    }
+    .bb-modal-arrow { display: none !important; }
+    .bb-modal-img-title {
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        padding: 20px 28px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.78), transparent);
+        color: var(--bb-white);
+        font-family: "DM Serif Display", serif;
+        font-size: 26px;
+        z-index: 3;
+    }
+    .bb-modal-info-col {
+        padding: 35px 40px;
+        background: var(--bb-white);
+        display: flex;
+        flex-direction: column;
+    }
+    .bb-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 18px;
+        gap: 15px;
+    }
+    .bb-modal-price {
+        font-family: "Poppins", sans-serif;
+        font-size: 36px;
+        font-weight: 800;
+        color: var(--bb-dark-text);
+        margin: 0;
+        line-height: 1;
+    }
+    .bb-modal-header-icons { display: flex; gap: 10px; }
+    .bb-modal-icon-btn {
+        width: 44px; height: 44px;
+        border-radius: 50%;
+        border: none;
+        display: grid; place-items: center;
+        font-size: 17px;
+        cursor: pointer;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+    }
+    .bb-modal-desc {
+        font-size: 15px;
+        color: var(--bb-soft-text);
+        margin-bottom: 26px;
+        line-height: 1.65;
+    }
+    .bb-modal-section { margin-bottom: 26px; }
+    .bb-modal-section-title {
+        font-family: "Poppins", sans-serif;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        color: var(--bb-dark-text);
+        text-transform: uppercase;
+        margin-bottom: 14px;
+    }
+    .bb-modal-options { display: flex; gap: 12px; flex-wrap: wrap; }
+    .bb-option-pill {
+        flex: 1;
+        min-width: 150px;
+        border: 2px solid rgba(178, 30, 41, 0.20);
+        border-radius: 14px;
+        padding: 16px 20px;
+        cursor: pointer;
+        background: var(--bb-white);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: var(--bb-transition);
+    }
+    .bb-option-pill.active {
+        border-color: var(--bb-deep-red);
+        background: #fff5f6;
+    }
+    .bb-option-radio {
+        width: 20px; height: 20px;
+        border-radius: 50%;
+        border: 2px solid rgba(178, 30, 41, 0.40);
+        position: relative;
+        flex-shrink: 0;
+    }
+    .bb-option-pill.active .bb-option-radio { border-color: var(--bb-deep-red); }
+    .bb-option-pill.active .bb-option-radio::after {
+        content: "";
+        position: absolute;
+        inset: 2px;
+        background: var(--bb-deep-red);
+        border-radius: 50%;
+    }
+    .bb-option-info { display: flex; flex-direction: column; line-height: 1.3; }
+    .bb-option-name {
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--bb-deep-red);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+    .bb-option-price { font-size: 14px; font-weight: 700; }
+    .bb-modal-textarea {
+        width: 100%;
+        border: 2px solid rgba(178, 30, 41, 0.15);
+        border-radius: 14px;
+        padding: 16px 20px;
+        font-size: 14px;
+        font-family: inherit;
+        resize: vertical;
+        min-height: 120px;
+        outline: none;
+    }
+    .bb-modal-charcount {
+        text-align: right;
+        font-size: 12px;
+        color: #b8a9a9;
+        margin-top: 6px;
+    }
+    .bb-modal-footer {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: auto;
+        padding-top: 22px;
+        border-top: 1px solid rgba(178, 30, 41, 0.08);
+    }
+    .bb-qty-box {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: var(--bb-pale-cream);
+        border-radius: 30px;
+        padding: 8px 10px;
+    }
+    .bb-qty-btn {
+        width: 38px; height: 38px;
+        border-radius: 50%;
+        border: none;
+        background: var(--bb-white);
+        color: var(--bb-deep-red);
+        display: grid; place-items: center;
+        cursor: pointer;
+    }
+    .bb-qty-value {
+        font-size: 17px;
+        font-weight: 800;
+        color: var(--bb-deep-red);
+        min-width: 24px;
+        text-align: center;
+    }
+    .bb-add-cart-btn {
+        flex: 1;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        border: none;
+        padding: 17px 24px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+    .bb-add-cart-divider { opacity: 0.4; }
+
+    /* TOAST */
+    .bb-toast {
+        position: fixed;
+        bottom: 75px;
+        right: 25px;
+        background: var(--bb-deep-red);
+        color: var(--bb-white);
+        padding: 15px 24px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        transform: translateY(120%);
+        transition: transform 0.4s ease;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 90vw;
+    }
+    .bb-toast.show { transform: translateY(0); }
+
+    /* EMPTY STATE */
+    .bb-empty {
+        text-align: center;
+        padding: 60px 20px;
+        background: var(--bb-white);
+        border-radius: var(--bb-radius);
+        border: 2px dashed rgba(178, 30, 41, 0.20);
+        display: none;
+    }
+    .bb-empty.show { display: block; }
+    .bb-empty i {
+        font-size: 60px;
+        color: var(--bb-light-pink);
+        margin-bottom: 20px;
+    }
+    .bb-empty h3 {
+        color: var(--bb-deep-red);
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .bb-empty p {
+        color: var(--bb-soft-text);
+        font-size: 15px;
+    }
+
+    /* =========================================================
+       RESPONSIVE — TABLET
+    ========================================================= */
+    @media (max-width: 1199px) {
+        .bb-nav-center .bb-logo img { width: 110px; height: 110px; margin-bottom: -50px; }
+        .bb-nav-pill { padding: 8px 14px; font-size: 12px; }
+        .bb-nav-pill .bb-pill-value { max-width: 100px; }
+        .bb-nav-locations-btn { padding: 10px 18px; font-size: 13px; }
+    }
+
+    @media (max-width: 991px) {
+        .bb-nav-left .bb-nav-pill:first-child { display: none; }
+        .bb-nav-center .bb-logo img { width: 100px; height: 100px; margin-bottom: -42px; }
+        .bb-nav-locations-btn { padding: 9px 16px; font-size: 12px; }
+        .bb-nav-locations-btn span { display: none; }
+        .bb-nav-cart, .bb-menu-toggle { width: 42px; height: 42px; font-size: 16px; }
+
+        .bb-page-header { min-height: 280px; padding: 50px 0; }
+        .bb-page-header h1 { font-size: 3rem; }
+
+        .bb-modal-row { min-height: auto; }
+        .bb-modal-info-col { padding: 28px 25px; }
+        .bb-modal-img-col { min-height: 340px; }
+        .bb-modal-price { font-size: 28px; }
+    }
+
+    /* =========================================================
+       RESPONSIVE — MOBILE (MAIN FIX)
+    ========================================================= */
+    @media (max-width: 767px) {
+        /* Global */
+        section { padding: 40px 0; }
+        .container { width: 94%; }
+        .bb-section-heading { margin-bottom: 25px; }
+        .bb-section-heading h2 { font-size: 1.5rem; margin-bottom: 8px; }
+        .bb-section-heading p { font-size: 12px; }
+        .bb-section-label { font-size: 11px; letter-spacing: 1.5px; }
+
+        /* NAVBAR — ALL ICONS VISIBLE */
+        .bb-navbar { padding: 6px 0; }
+        .bb-nav-container {
+            min-height: 52px;
+            gap: 6px;
+            padding: 0;
+        }
+        .bb-nav-left { display: none; }
+        .bb-nav-center .bb-logo img {
+            width: 62px;
+            height: 62px;
+            margin-bottom: -22px;
+            padding: 3px;
+        }
+        .bb-nav-locations-btn {
+            padding: 8px 12px;
+            font-size: 12px;
+            min-width: auto;
+        }
+        .bb-nav-locations-btn span { display: none; }
+        .bb-nav-locations-btn::before {
+            content: "\f3c5";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 13px;
+            color: var(--bb-deep-red);
+        }
+        .bb-nav-locations-btn:hover::before { color: var(--bb-white); }
+        .bb-nav-cart, .bb-menu-toggle {
+            width: 40px;
+            height: 40px;
+            font-size: 15px;
+        }
+        .bb-cart-count {
+            width: 18px;
+            height: 18px;
+            font-size: 9px;
+            top: -3px;
+            right: -3px;
+        }
+        .bb-nav-divider { display: none; }
+
+        /* PAGE HEADER — FULL WIDTH COMPACT */
+        .bb-page-header {
+            width: 100vw !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            margin-left: calc(-50vw + 50%) !important;
+            margin-right: calc(-50vw + 50%) !important;
+            border-radius: 0 !important;
+            min-height: 180px;
+            padding: 40px 0 30px;
+            box-shadow: none;
+        }
+        .bb-page-header-inner { width: 100% !important; padding: 0 16px; }
+        .bb-page-header h1 { font-size: 1.9rem; margin-bottom: 6px; }
+        .bb-page-header p { font-size: 12px; margin-bottom: 12px; max-width: 95%; }
+        .bb-breadcrumb { font-size: 11px; gap: 6px; }
+
+        /* FILTERS — SCROLLABLE ROW */
+        .bb-filters {
+            gap: 8px;
+            margin-bottom: 25px;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .bb-filters::-webkit-scrollbar { display: none; }
+        .bb-filter-btn {
+            padding: 8px 14px;
+            font-size: 11px;
+            flex-shrink: 0;
+            border-width: 1.5px;
+            gap: 5px;
+        }
+        .bb-filter-btn i { font-size: 12px; }
+
+        /* PRODUCTS GRID — 2 columns compact */
+        .bb-menu-section .col-md-6.col-lg-4.col-xl-3 {
+            flex: 0 0 auto;
+            width: 50%;
+            padding-left: 6px;
+            padding-right: 6px;
+        }
+        .bb-menu-section .row.g-4 {
+            --bs-gutter-x: 10px;
+            --bs-gutter-y: 10px;
+        }
+
+        .bb-uk-card-head { padding: 10px 10px 6px; }
+        .bb-uk-card-head h3 {
+            font-size: 10px !important;
+            margin-bottom: 5px !important;
+            letter-spacing: 0.3px !important;
+            line-height: 1.2;
+        }
+        .bb-size-pills { gap: 4px; margin-bottom: 6px; }
+        .bb-size-pills span {
+            padding: 2px 7px;
+            font-size: 8px;
+            letter-spacing: 0.3px;
+        }
+        .bb-uk-card-img { height: 120px; }
+        .bb-uk-card-body { padding: 8px 10px 12px; }
+        .bb-uk-card-body p {
+            font-size: 11px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .bb-price-label { font-size: 10px; }
+        .bb-price-label strong { font-size: 12px; }
+        /* ADD button becomes circular + */
+        .bb-add-btn {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            border-radius: 50%;
+            font-size: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bb-add-btn::after {
+            content: '+';
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .bb-new-badge {
+            font-size: 8px;
+            padding: 3px 8px;
+            top: 6px;
+            left: 6px;
+        }
+
+        /* EMPTY STATE */
+        .bb-empty { padding: 35px 16px; }
+        .bb-empty i { font-size: 42px; margin-bottom: 12px; }
+        .bb-empty h3 { font-size: 16px; margin-bottom: 6px; }
+        .bb-empty p { font-size: 12px; }
+
+        /* MODALS — Compact */
+        .bb-modal-info-col { padding: 20px 18px; }
+        .bb-modal-price { font-size: 22px; }
+        .bb-modal-desc { font-size: 12px; margin-bottom: 16px; }
+        .bb-modal-section { margin-bottom: 16px; }
+        .bb-modal-section-title { font-size: 11px; margin-bottom: 10px; }
+        .bb-option-pill {
+            padding: 10px 12px;
+            min-width: 100%;
+            gap: 10px;
+        }
+        .bb-option-radio { width: 16px; height: 16px; }
+        .bb-option-name { font-size: 10px; }
+        .bb-option-price { font-size: 12px; }
+        .bb-modal-textarea {
+            min-height: 80px;
+            padding: 12px;
+            font-size: 12px;
+        }
+        .bb-modal-charcount { font-size: 10px; }
+        .bb-modal-footer { gap: 8px; padding-top: 14px; }
+        .bb-qty-box { padding: 5px 8px; gap: 8px; }
+        .bb-qty-btn { width: 30px; height: 30px; font-size: 12px; }
+        .bb-qty-value { font-size: 14px; }
+        .bb-add-cart-btn {
+            padding: 12px 14px;
+            font-size: 12px;
+            gap: 6px;
+        }
+        .bb-add-cart-btn .bb-add-cart-divider { display: none; }
+        .bb-modal-img-col { min-height: 200px; }
+        .bb-modal-img-title { font-size: 16px; padding: 12px 16px; }
+
+        /* CART MODAL */
+        .bb-cart-modal .modal-header { padding: 14px 18px; }
+        .bb-cart-modal .modal-title { font-size: 16px; }
+        .bb-cart-modal .modal-body { padding: 14px 16px; max-height: 50vh; }
+        .bb-cart-modal .modal-footer {
+            padding: 12px 16px;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+        }
+        .bb-cart-item { padding: 10px; gap: 10px; }
+        .bb-cart-item-img { width: 50px; height: 50px; }
+        .bb-cart-item-info h5 { font-size: 12px; }
+        .bb-cart-item-info p { font-size: 11px; }
+        .bb-cart-item-remove { width: 30px; height: 30px; font-size: 12px; }
+        .bb-cart-total { font-size: 12px; text-align: center; }
+        .bb-cart-total strong { font-size: 15px; }
+        .bb-cart-checkout-btn,
+        .bb-cart-clear-btn {
+            padding: 11px 20px;
+            font-size: 12px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* LOCATION POPUP */
+        .bb-loc-card { max-width: 94vw; border-radius: 18px; }
+        .bb-loc-header { padding: 20px 15px 18px; }
+        .bb-loc-header img { width: 70px; height: 70px; padding: 5px; }
+        .bb-loc-body { padding: 20px 18px 18px; }
+        .bb-loc-title { font-size: 17px; margin-bottom: 16px; }
+        .bb-order-toggle button { padding: 10px 14px; font-size: 12px; }
+        .bb-loc-question { font-size: 12px; margin-bottom: 14px; }
+        .bb-loc-use-btn { padding: 10px 16px; font-size: 12px; margin-bottom: 14px; max-width: 100%; }
+        .bb-loc-label { font-size: 11px; }
+        .bb-loc-select { padding: 12px 16px; font-size: 13px; margin-bottom: 12px; }
+        .bb-branch-details { padding: 14px 14px; margin-bottom: 16px; }
+        .bb-branch-icon { width: 32px; height: 32px; font-size: 13px; }
+        .bb-branch-label { font-size: 10px; }
+        .bb-branch-name { font-size: 12px; }
+        .bb-branch-address { font-size: 11px; margin-left: 44px; margin-bottom: 8px; }
+        .bb-branch-directions { font-size: 11px; margin-left: 44px; }
+        .bb-loc-select-btn { padding: 13px; font-size: 14px; }
+
+        /* CTA */
+        .bb-cta { border-radius: 20px; padding: 30px 0; width: 96%; }
+        .bb-cta-title { font-size: 1.5rem; margin-bottom: 10px; }
+        .bb-cta-text { font-size: 12px; }
+
+        /* FOOTER */
+        .bb-footer { padding-top: 35px; margin-top: 30px; }
+        .bb-footer-title { font-size: 15px; margin-bottom: 12px; }
+        .bb-footer-link { font-size: 12px; margin-bottom: 6px; }
+        .bb-footer-contact { font-size: 12px; margin-bottom: 8px; }
+        .bb-footer-text { font-size: 12px; }
+        .bb-footer-logo img { width: 45px; height: 45px; }
+        .bb-footer-logo { font-size: 18px; }
+        .bb-footer-bottom { padding: 14px 0; }
+        .bb-footer-bottom p { font-size: 11px; }
+        .bb-social { width: 34px; height: 34px; font-size: 13px; }
+
+        /* DROPDOWN */
+        .bb-dropdown-panel { width: 100%; max-width: 100%; }
+
+        /* FLOATING BUTTONS */
+        .bb-whatsapp, .bb-scroll-top {
+            right: 12px;
+            width: 44px;
+            height: 44px;
+            font-size: 18px;
+        }
+        .bb-whatsapp { bottom: 60px; }
+        .bb-scroll-top { bottom: 112px; font-size: 15px; }
+
+        /* TICKER */
+        .bb-ticker { font-size: 11px; padding: 8px 0; }
+        .bb-ticker span { margin: 0 22px; gap: 5px; }
+
+        /* TOAST */
+        .bb-toast {
+            bottom: 100px;
+            right: 12px;
+            left: 12px;
+            font-size: 12px;
+            padding: 12px 18px;
+            justify-content: center;
+        }
+    }
+
+    /* =========================================================
+       RESPONSIVE — EXTRA SMALL
+    ========================================================= */
+    @media (max-width: 480px) {
+        .bb-nav-center .bb-logo img { width: 56px; height: 56px; margin-bottom: -20px; }
+        .bb-nav-cart, .bb-menu-toggle { width: 38px; height: 38px; font-size: 14px; }
+        .bb-nav-locations-btn { padding: 7px 10px; }
+        .bb-nav-locations-btn::before { font-size: 12px; }
+
+        .bb-page-header { min-height: 160px; padding: 32px 0 26px; }
+        .bb-page-header h1 { font-size: 1.6rem; }
+        .bb-page-header p { font-size: 11px; }
+
+        .bb-uk-card-img { height: 105px; }
+        .bb-uk-card-head h3 { font-size: 9px !important; }
+        .bb-size-pills span { padding: 2px 6px; font-size: 7px; }
+        .bb-price-label strong { font-size: 11px; }
+        .bb-add-btn { width: 28px; height: 28px; }
+
+        .bb-section-heading h2 { font-size: 1.3rem; }
+
+        .bb-modal-img-col { min-height: 170px; }
+        .bb-modal-price { font-size: 20px; }
+    }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOCATION POPUP -->
+    <div class="bb-loc-popup" id="locPopup">
+        <div class="bb-loc-card">
+            <div class="bb-loc-header">
+                <img src="images/logo.png" alt="Bakerz Bite Logo">
+            </div>
+            <div class="bb-loc-body">
+                <h2 class="bb-loc-title">Select Your Order Type</h2>
+
+                <div class="bb-order-toggle">
+                    <button type="button" data-mode="delivery">Delivery</button>
+                    <button type="button" data-mode="pickup" class="active">Pick-Up</button>
+                </div>
+
+                <p class="bb-loc-question" id="locQuestion">
+                    Which outlet would you like to pick-up from?
+                </p>
+
+                <button type="button" class="bb-loc-use-btn" id="useCurrentLocBtn">
+                    <i class="fa-solid fa-location-crosshairs"></i>
+                    Use Current Location
+                </button>
+
+                <label class="bb-loc-label">Select Branch</label>
+
+                <select class="bb-loc-select" id="branchSelect">
+                    <option value="shahfaisal" data-address="Plot 64, Ibrahim Residency, Main Alamgir Road, Shahfaisal" data-name="Bakerz Bite Shahfaisal" data-lat="24.8720" data-lng="67.1520">
+                        Bakerz Bite Shahfaisal
+                    </option>
+                    <option value="dha" data-address="123 Baker Street, DHA Phase 6, Karachi" data-name="Bakerz Bite DHA Phase 6" data-lat="24.8000" data-lng="67.0500">
+                        Bakerz Bite DHA Phase 6
+                    </option>
+                    <option value="gulshan" data-address="Plot 45, Block 13-D, Gulshan-e-Iqbal, Karachi" data-name="Bakerz Bite Gulshan" data-lat="24.9200" data-lng="67.0900">
+                        Bakerz Bite Gulshan
+                    </option>
+                    <option value="clifton" data-address="Shop 12, Boat Basin, Clifton Block 5, Karachi" data-name="Bakerz Bite Clifton" data-lat="24.8138" data-lng="67.0300">
+                        Bakerz Bite Clifton
+                    </option>
+                </select>
+
+                <div class="bb-branch-details">
+                    <div class="bb-branch-head">
+                        <div class="bb-branch-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div>
+                            <div class="bb-branch-label">Branch Location</div>
+                            <p class="bb-branch-name" id="branchName">Bakerz Bite Shahfaisal</p>
+                        </div>
+                    </div>
+                    <p class="bb-branch-address" id="branchAddress">
+                        Address: Plot 64, Ibrahim Residency, Main Alamgir Road, Shahfaisal
+                    </p>
+                    <a href="#" class="bb-branch-directions" id="branchDirections" target="_blank">
+                        <i class="fa-solid fa-diamond-turn-right"></i>
+                        Get Directions
+                    </a>
+                </div>
+
+                <button type="button" class="bb-loc-select-btn" id="locSelectBtn">
+                    Select
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- NAVBAR -->
+    <nav class="bb-navbar">
+        <div class="container bb-nav-container">
+
+            <div class="bb-nav-left">
+                <span class="bb-nav-pill" id="topbarLocationPill">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                        <span class="bb-pill-label">PICKUP</span>
+                        <span class="bb-pill-value" id="topbarBranchName">Bakerz Bite Shahfaisal</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right bb-chev"></i>
+                </span>
+
+                <span class="bb-nav-pill">
+                    <i class="fa-solid fa-phone"></i>
+                    <div>
+                        <span class="bb-pill-value">021-111-022-022</span>
+                    </div>
+                </span>
+            </div>
+
+            <div class="bb-nav-center">
+                <a href="index.html" class="bb-logo">
+                    <img src="images/logo.png" alt="Bakerz Bite Logo">
+                </a>
+            </div>
+
+            <div class="bb-nav-right">
+                <button type="button" class="bb-nav-locations-btn" data-bs-toggle="modal" data-bs-target="#signinModal">
+                    <span>Our Locations</span>
+                </button>
+
+                <button type="button" class="bb-nav-cart" id="openCartBtn" aria-label="Shopping Bag">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="bb-cart-count">0</span>
+                </button>
+
+                <div class="bb-nav-divider d-none d-md-block"></div>
+
+                <button type="button" class="bb-menu-toggle" id="bbMenuToggle" aria-label="Open Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- DROPDOWN PANEL -->
+    <div class="bb-dropdown-overlay" id="bbDropdownOverlay"></div>
+
+    <div class="bb-dropdown-panel" id="bbDropdownPanel">
+        <div class="bb-dropdown-header">
+            <h3 class="bb-dropdown-title">
+                <i class="fa-solid fa-cake-candles"></i> Menu
+            </h3>
+            <button type="button" class="bb-dropdown-close" id="bbDropdownClose">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="bb-dropdown-body">
+            <div class="bb-dropdown-section-title">Main Pages</div>
+            <ul class="bb-dropdown-list">
+                <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                <li><a href="menu.html" class="active"><i class="fa-solid fa-book-open"></i> Menu</a></li>
+                <li><a href="merchandise.html"><i class="fa-solid fa-mug-hot"></i> Merchandise</a></li>
+                <li><a href="offers.html"><i class="fa-solid fa-gift"></i> Offers</a></li>
+                <li><a href="gallery.html"><i class="fa-solid fa-images"></i> Gallery</a></li>
+            </ul>
+
+            <div class="bb-dropdown-section-title">Support &amp; Info</div>
+            <ul class="bb-dropdown-list">
+                <li><a href="feedback.html"><i class="fa-solid fa-star"></i> Feedback</a></li>
+                <li><a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+                <li><a href="faq.html"><i class="fa-solid fa-circle-question"></i> FAQ</a></li>
+                <li><a href="sitemap.html"><i class="fa-solid fa-sitemap"></i> Sitemap</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- PAGE HEADER -->
+    <section class="bb-page-header">
+        <div class="bb-page-header-inner">
+            <h1>Our Menu</h1>
+            <p>Explore our wide range of freshly baked goods. Click any item for details &amp; customize your order.</p>
+            <div class="bb-breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>Menu</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- MENU SECTION -->
+    <section class="bb-menu-section">
+        <div class="container">
+
+            <!-- FILTERS -->
+            <div class="bb-filters">
+                <button class="bb-filter-btn active" data-filter="all">
+                    <i class="fa-solid fa-border-all"></i> All
+                </button>
+                <button class="bb-filter-btn" data-filter="cakes">
+                    <i class="fa-solid fa-cake-candles"></i> Cakes
+                </button>
+                <button class="bb-filter-btn" data-filter="pastries">
+                    <i class="fa-solid fa-bread-slice"></i> Pastries
+                </button>
+                <button class="bb-filter-btn" data-filter="cookies">
+                    <i class="fa-solid fa-cookie-bite"></i> Cookies
+                </button>
+                <button class="bb-filter-btn" data-filter="pies">
+                    <i class="fa-solid fa-apple-whole"></i> Pies
+                </button>
+                <button class="bb-filter-btn" data-filter="beverages">
+                    <i class="fa-solid fa-mug-hot"></i> Beverages
+                </button>
+                <button class="bb-filter-btn" data-filter="savories">
+                    <i class="fa-solid fa-pizza-slice"></i> Savories
+                </button>
+                <button class="bb-filter-btn" data-filter="breads">
+                    <i class="fa-solid fa-bread-slice"></i> Breads
+                </button>
+            </div>
+
+            <!-- PRODUCTS GRID -->
+            <div class="row g-4" id="menuGrid">
+
+                <!-- CAKES (4) -->
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="cakes">
+                    <div class="bb-uk-card" data-product="chocolate-cake">
+                        <div class="bb-uk-card-head">
+                            <h3>Chocolate Cake</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>MEDIUM</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/chocolate-cake-1.png" alt="Chocolate Cake"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Rich, moist chocolate cake with creamy chocolate frosting.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 1,800</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="cakes">
+                    <div class="bb-uk-card" data-product="red-velvet">
+                        <div class="bb-uk-card-head">
+                            <h3>Red Velvet Cake</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>MEDIUM</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/red-velvet-1.png" alt="Red Velvet Cake"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Classic red velvet cake with cream cheese frosting.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 2,200</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="cakes">
+                    <div class="bb-uk-card" data-product="vanilla-cake">
+                        <div class="bb-uk-card-head">
+                            <h3>Vanilla Cake</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>MEDIUM</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/vanilla-cake-1.png" alt="Vanilla Cake"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Light and fluffy vanilla cake with buttercream frosting.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 1,500</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="cakes">
+                    <div class="bb-uk-card" data-product="cheesecake">
+                        <div class="bb-uk-card-head">
+                            <h3>Cheesecake</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>MEDIUM</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/cheesecake-1.png" alt="Cheesecake"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Creamy New York-style cheesecake with buttery biscuit base.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 2,500</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASTRIES (4) -->
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="pastries">
+                    <div class="bb-uk-card" data-product="butter-croissant">
+                        <div class="bb-uk-card-head">
+                            <h3>Butter Croissant</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/croissant-1.png" alt="Butter Croissant"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Golden, flaky and buttery croissants baked fresh every morning.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 350</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="pastries">
+                    <div class="bb-uk-card" data-product="chocolate-pastry">
+                        <div class="bb-uk-card-head">
+                            <h3>Chocolate Pastry</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/chocolate-pastry-1.png" alt="Chocolate Pastry"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Decadent chocolate pastry with a smooth ganache filling.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 400</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="pastries">
+                    <div class="bb-uk-card" data-product="danish-pastry">
+                        <div class="bb-uk-card-head">
+                            <h3>Danish Pastry</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/danish-pastry-1.png" alt="Danish Pastry"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Sweet Danish pastry with fruit filling and a light glaze.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 380</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="pastries">
+                    <div class="bb-uk-card" data-product="almond-croissant">
+                        <div class="bb-uk-card-head">
+                            <h3>Almond Croissant</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/almond-croissant-1.png" alt="Almond Croissant"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Buttery croissant filled with almond cream and topped with almonds.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 450</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COOKIES (4) -->
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="cookies">
+                    <div class="bb-uk-card" data-product="chocolate-chip-cookies">
+                        <div class="bb-uk-card-head">
+                            <h3>Chocolate Chip Cookies</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img">
+                            <img src="images/chocolate-chip-cookies-1.png" alt="Chocolate Chip Cookies">
+                            <span class="bb-new-badge">BEST SELLER</span>
+                        </div>
+                        <div class="bb-uk-card-body">
+                            <p>Soft and chewy cookies loaded with premium chocolate chips.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 250</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="cookies">
+                    <div class="bb-uk-card" data-product="butter-cookies">
+                        <div class="bb-uk-card-head">
+                            <h3>Butter Cookies</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/butter-cookies-1.png" alt="Butter Cookies"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Classic butter cookies that melt in your mouth.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 300</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="cookies">
+                    <div class="bb-uk-card" data-product="double-chocolate-cookies">
+                        <div class="bb-uk-card-head">
+                            <h3>Double Chocolate Cookies</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/double-chocolate-1.png" alt="Double Chocolate Cookies"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Rich chocolate cookies with dark chocolate chunks.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 320</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="cookies">
+                    <div class="bb-uk-card" data-product="oatmeal-cookies">
+                        <div class="bb-uk-card-head">
+                            <h3>Oatmeal Cookies</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/oatmeal-cookies-1.png" alt="Oatmeal Cookies"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Healthy oatmeal cookies with raisins and cinnamon.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 280</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PIES (4) -->
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="pies">
+                    <div class="bb-uk-card" data-product="apple-pie">
+                        <div class="bb-uk-card-head">
+                            <h3>Classic Apple Pie</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>MEDIUM</span></div>
+                        </div>
+                        <div class="bb-uk-card-img">
+                            <img src="images/apple-pie-1.png" alt="Apple Pie">
+                            <span class="bb-new-badge">NEW ARRIVAL</span>
+                        </div>
+                        <div class="bb-uk-card-body">
+                            <p>Homemade apple pie with buttery crust and cinnamon apples.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 950</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="pies">
+                    <div class="bb-uk-card" data-product="chocolate-pie">
+                        <div class="bb-uk-card-head">
+                            <h3>Chocolate Pie</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>MEDIUM</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/chocolate-pie-1.png" alt="Chocolate Pie"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Silky chocolate pie with a crunchy biscuit base.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 1,100</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="pies">
+                    <div class="bb-uk-card" data-product="fruit-pie">
+                        <div class="bb-uk-card-head">
+                            <h3>Fruit Pie</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>MEDIUM</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/fruit-pie-1.png" alt="Fruit Pie"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Fresh seasonal fruits baked into a golden pie crust.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 1,050</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="pies">
+                    <div class="bb-uk-card" data-product="lemon-pie">
+                        <div class="bb-uk-card-head">
+                            <h3>Lemon Pie</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>MEDIUM</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/lemon-pie-1.png" alt="Lemon Pie"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Zesty lemon pie with creamy filling and meringue topping.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 1,000</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BEVERAGES (4) -->
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="beverages">
+                    <div class="bb-uk-card" data-product="cold-coffee">
+                        <div class="bb-uk-card-head">
+                            <h3>Cold Coffee</h3>
+                            <div class="bb-size-pills"><span class="active">REGULAR</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/cold-coffee-1.png" alt="Cold Coffee"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Chilled coffee blended with milk, ice and a hint of chocolate.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 450</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="beverages">
+                    <div class="bb-uk-card" data-product="cold-beverage">
+                        <div class="bb-uk-card-head">
+                            <h3>Fresh Lemonade</h3>
+                            <div class="bb-size-pills"><span class="active">REGULAR</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/cold-beverage-1.png" alt="Fresh Lemonade"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Freshly squeezed lemonade with mint and ice. Refreshing!</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 350</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="beverages">
+                    <div class="bb-uk-card" data-product="iced-tea">
+                        <div class="bb-uk-card-head">
+                            <h3>Iced Tea</h3>
+                            <div class="bb-size-pills"><span class="active">REGULAR</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/iced-tea-1.png" alt="Iced Tea"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Refreshing iced tea with lemon and mint.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 300</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="beverages">
+                    <div class="bb-uk-card" data-product="smoothie">
+                        <div class="bb-uk-card-head">
+                            <h3>Berry Smoothie</h3>
+                            <div class="bb-size-pills"><span class="active">REGULAR</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/smoothie-1.png" alt="Berry Smoothie"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Creamy berry smoothie made with fresh fruits and yogurt.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 500</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SAVORIES (4) -->
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="savories">
+                    <div class="bb-uk-card" data-product="chicken-puff">
+                        <div class="bb-uk-card-head">
+                            <h3>Chicken Puff</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/chicken-puff-1.png" alt="Chicken Puff"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Crispy puff pastry filled with spiced chicken.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 150</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="savories">
+                    <div class="bb-uk-card" data-product="veg-samosa">
+                        <div class="bb-uk-card-head">
+                            <h3>Vegetable Samosa</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/veg-samosa-1.png" alt="Vegetable Samosa"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Crispy samosa filled with spiced potatoes and peas.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 120</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="savories">
+                    <div class="bb-uk-card" data-product="chicken-roll">
+                        <div class="bb-uk-card-head">
+                            <h3>Chicken Roll</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/chicken-roll-1.png" alt="Chicken Roll"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Golden puff pastry roll with a delicious chicken filling.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 180</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="savories">
+                    <div class="bb-uk-card" data-product="cheese-puff">
+                        <div class="bb-uk-card-head">
+                            <h3>Cheese Puff</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/cheese-puff-1.png" alt="Cheese Puff"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Crispy puff pastry filled with melted cheese.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 160</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BREADS (4) -->
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="breads">
+                    <div class="bb-uk-card" data-product="sourdough-bread">
+                        <div class="bb-uk-card-head">
+                            <h3>Sourdough Bread</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/sourdough-1.png" alt="Sourdough Bread"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Artisan sourdough bread with a crispy crust and soft crumb.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 450</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="breads">
+                    <div class="bb-uk-card" data-product="whole-wheat-bread">
+                        <div class="bb-uk-card-head">
+                            <h3>Whole Wheat Bread</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/whole-wheat-1.png" alt="Whole Wheat Bread"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Healthy whole wheat bread baked with natural ingredients.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 350</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="breads">
+                    <div class="bb-uk-card" data-product="multigrain-bread">
+                        <div class="bb-uk-card-head">
+                            <h3>Multigrain Bread</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/multigrain-1.png" alt="Multigrain Bread"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Wholesome multigrain bread loaded with seeds and grains.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 400</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-3 menu-item" data-category="breads">
+                    <div class="bb-uk-card" data-product="french-baguette">
+                        <div class="bb-uk-card-head">
+                            <h3>French Baguette</h3>
+                            <div class="bb-size-pills"><span class="active">SMALL</span><span>LARGE</span></div>
+                        </div>
+                        <div class="bb-uk-card-img"><img src="images/baguette-1.png" alt="French Baguette"></div>
+                        <div class="bb-uk-card-body">
+                            <p>Classic French baguette with a crispy crust and soft center.</p>
+                            <div class="bb-uk-card-price-row">
+                                <span class="bb-price-label">From <strong>Rs. 300</strong></span>
+                                <button class="bb-add-btn" type="button">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Empty State -->
+            <div class="bb-empty" id="emptyState">
+                <i class="fa-solid fa-cookie-bite"></i>
+                <h3>No items in this category</h3>
+                <p>Try selecting a different category from above.</p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- CTA -->
+    <section class="bb-cta">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <p class="bb-section-label">Have a Question?</p>
+                    <h2 class="bb-cta-title">
+                        Let's Make Something <span>Delicious Together!</span>
+                    </h2>
+                    <p class="bb-cta-text">
+                        Have a custom cake idea or want to know more
+                        about our products? We'd love to hear from you.
+                    </p>
+                </div>
+                <div class="col-lg-4 text-lg-end text-center">
+                    <a href="contact.html" class="btn bb-btn-primary" style="padding:14px 28px;border-radius:30px;font-size:14px;font-weight:700;background:#B21E29;color:#fff;border:2px solid #B21E29;display:inline-flex;align-items:center;gap:8px;">
+                        Contact Us <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="bb-footer">
+        <div class="container">
+            <div class="row g-5 pb-5">
+                <div class="col-lg-4">
+                    <a href="index.html" class="bb-footer-logo">
+                        <img src="images/logo.png" alt="Bakerz Bite Logo">
+                        <span>Bakerz Bite</span>
+                    </a>
+                    <p class="bb-footer-text">
+                        Freshly baked happiness, one delicious bite at a time.
+                    </p>
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="#" class="bb-social"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="bb-social"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="bb-social"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h3 class="bb-footer-title">Quick Links</h3>
+                    <a href="index.html" class="bb-footer-link">Home</a>
+                    <a href="about.html" class="bb-footer-link">About Us</a>
+                    <a href="menu.html" class="bb-footer-link">Our Menu</a>
+                    <a href="merchandise.html" class="bb-footer-link">Merchandise</a>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h3 class="bb-footer-title">Explore</h3>
+                    <a href="offers.html" class="bb-footer-link">Offers</a>
+                    <a href="gallery.html" class="bb-footer-link">Gallery</a>
+                    <a href="feedback.html" class="bb-footer-link">Feedback</a>
+                    <a href="faq.html" class="bb-footer-link">FAQ</a>
+                </div>
+
+                <div class="col-lg-4">
+                    <h3 class="bb-footer-title">Contact Us</h3>
+                    <p class="bb-footer-contact"><i class="fa-solid fa-location-dot"></i> 123 Baker Street, DHA Phase 6, Karachi</p>
+                    <p class="bb-footer-contact"><i class="fa-solid fa-phone"></i> 021-111-022-022</p>
+                    <p class="bb-footer-contact"><i class="fa-solid fa-envelope"></i> hello@bakerzbite.com</p>
+                </div>
+            </div>
+            <div class="bb-footer-bottom text-center">
+                <p>© 2026 Bakerz Bite. All Rights Reserved. | Where Smiles Are Served Daily.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- FLOATING BUTTONS -->
+    <a href="https://wa.me/923001234567" class="bb-float bb-whatsapp" target="_blank" aria-label="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <button class="bb-float bb-scroll-top" id="scrollTopBtn" aria-label="Scroll to Top">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
+
+    <!-- BOTTOM TICKER -->
+    <div class="bb-ticker">
+        <div class="bb-ticker-track" id="tickerTrack"></div>
+    </div>
+
+
+    <!-- PRODUCT MODAL -->
+    <div class="modal fade bb-product-modal" id="productModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="row g-0 bb-modal-row">
+                    <div class="col-lg-6 bb-modal-img-col">
+                        <img id="pmodalImg" src="" alt="Product">
+                        <div class="bb-modal-img-title" id="pmodalImgTitle">Product</div>
+                    </div>
+                    <div class="col-lg-6 bb-modal-info-col">
+                        <div class="bb-modal-header">
+                            <h2 class="bb-modal-price" id="pmodalPrice">Rs. 0</h2>
+                            <div class="bb-modal-header-icons">
+                                <button class="bb-modal-icon-btn" aria-label="Share"><i class="fa-solid fa-share-nodes"></i></button>
+                                <button class="bb-modal-icon-btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </div>
+                        <p class="bb-modal-desc" id="pmodalDesc">Product description will appear here.</p>
+                        <div class="bb-modal-section">
+                            <h4 class="bb-modal-section-title">CHOOSE AN OPTION</h4>
+                            <div class="bb-modal-options" id="pmodalOptions"></div>
+                        </div>
+                        <div class="bb-modal-section">
+                            <h4 class="bb-modal-section-title">Special Instructions</h4>
+                            <textarea class="bb-modal-textarea" id="pmodalNotes" maxlength="500"
+                                      placeholder="Please enter instructions about this item"></textarea>
+                            <div class="bb-modal-charcount"><span id="pmodalCharCount">0</span>/500</div>
+                        </div>
+                        <div class="bb-modal-footer">
+                            <div class="bb-qty-box">
+                                <button class="bb-qty-btn bb-qty-minus" aria-label="Decrease"><i class="fa-solid fa-trash"></i></button>
+                                <span class="bb-qty-value" id="pmodalQty">1</span>
+                                <button class="bb-qty-btn bb-qty-plus" aria-label="Increase"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                            <button class="bb-add-cart-btn" id="pmodalAddCart">
+                                <span id="pmodalTotalPrice">Rs. 0</span>
+                                <span class="bb-add-cart-divider">|</span>
+                                <span>Add to Cart</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =========================================================
+         CART MODAL
+    ========================================================= -->
+    <div class="modal fade bb-cart-modal" id="cartModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Your Shopping Bag
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="cartModalBody">
+                    <!-- Cart items will be dynamically added here -->
+                </div>
+                <div class="modal-footer">
+                    <div class="bb-cart-total">
+                        Total: <strong id="cartTotalPrice">Rs. 0</strong>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; width: 100%; justify-content: center;">
+                        <button type="button" class="bb-cart-clear-btn" id="clearCartBtn">
+                            <i class="fa-solid fa-trash"></i> Clear Cart
+                        </button>
+                        <button type="button" class="bb-cart-checkout-btn" id="checkoutBtn">
+                            Checkout <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- OUR LOCATIONS MODAL -->
+    <div class="modal fade" id="signinModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius:20px; border:none;">
+                <div class="modal-header" style="background:#B21E29; color:#fff; border-radius:20px 20px 0 0;">
+                    <h5 class="modal-title"><i class="fa-solid fa-location-dot"></i> Our Locations</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p style="color:#76565A; font-size:14px; margin-bottom:15px;">Visit us at any of our locations:</p>
+                    <div style="padding:12px; background:#fdf1f2; border-radius:12px; margin-bottom:10px;">
+                        <strong style="color:#B21E29; font-size:14px;">Bakerz Bite Shahfaisal</strong>
+                        <p style="font-size:13px; color:#76565A; margin:4px 0 0;">Plot 64, Ibrahim Residency, Main Alamgir Road</p>
+                    </div>
+                    <div style="padding:12px; background:#fdf1f2; border-radius:12px; margin-bottom:10px;">
+                        <strong style="color:#B21E29; font-size:14px;">Bakerz Bite DHA Phase 6</strong>
+                        <p style="font-size:13px; color:#76565A; margin:4px 0 0;">123 Baker Street, DHA Phase 6</p>
+                    </div>
+                    <div style="padding:12px; background:#fdf1f2; border-radius:12px; margin-bottom:10px;">
+                        <strong style="color:#B21E29; font-size:14px;">Bakerz Bite Gulshan</strong>
+                        <p style="font-size:13px; color:#76565A; margin:4px 0 0;">Plot 45, Block 13-D, Gulshan-e-Iqbal</p>
+                    </div>
+                    <div style="padding:12px; background:#fdf1f2; border-radius:12px;">
+                        <strong style="color:#B21E29; font-size:14px;">Bakerz Bite Clifton</strong>
+                        <p style="font-size:13px; color:#76565A; margin:4px 0 0;">Shop 12, Boat Basin, Clifton Block 5</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    (function () {
+        "use strict";
+
+        /* =========================================================
+           PRODUCT DATA — 28 products (4 per category)
+        ========================================================= */
+        const PRODUCTS = {
+            // CAKES
+            "chocolate-cake": { name: "Chocolate Cake", image: "images/chocolate-cake-1.png", desc: "Rich, moist chocolate cake layered with creamy chocolate frosting and topped with chocolate shavings. Perfect for celebrations.", options: [{name:"SMALL",price:1800},{name:"MEDIUM",price:3200}] },
+            "red-velvet": { name: "Red Velvet Cake", image: "images/red-velvet-1.png", desc: "Classic red velvet cake with cream cheese frosting and a hint of cocoa. A timeless favorite.", options: [{name:"SMALL",price:2200},{name:"MEDIUM",price:3800}] },
+            "vanilla-cake": { name: "Vanilla Cake", image: "images/vanilla-cake-1.png", desc: "Light and fluffy vanilla cake with buttercream frosting. Perfect for any occasion.", options: [{name:"SMALL",price:1500},{name:"MEDIUM",price:2800}] },
+            "cheesecake": { name: "Cheesecake", image: "images/cheesecake-1.png", desc: "Creamy New York-style cheesecake with a buttery biscuit base.", options: [{name:"SMALL",price:2500},{name:"MEDIUM",price:4200}] },
+            // PASTRIES
+            "butter-croissant": { name: "Butter Croissant", image: "images/croissant-1.png", desc: "Golden, flaky and buttery croissants baked fresh every morning.", options: [{name:"SMALL",price:350},{name:"LARGE",price:640}] },
+            "chocolate-pastry": { name: "Chocolate Pastry", image: "images/chocolate-pastry-1.png", desc: "Decadent chocolate pastry with a smooth ganache filling.", options: [{name:"SMALL",price:400},{name:"LARGE",price:720}] },
+            "danish-pastry": { name: "Danish Pastry", image: "images/danish-pastry-1.png", desc: "Sweet Danish pastry with fruit filling and a light glaze.", options: [{name:"SMALL",price:380},{name:"LARGE",price:680}] },
+            "almond-croissant": { name: "Almond Croissant", image: "images/almond-croissant-1.png", desc: "Buttery croissant filled with almond cream and topped with almonds.", options: [{name:"SMALL",price:450},{name:"LARGE",price:820}] },
+            // COOKIES
+            "chocolate-chip-cookies": { name: "Chocolate Chip Cookies", image: "images/chocolate-chip-cookies-1.png", desc: "Soft and chewy cookies loaded with premium chocolate chips.", options: [{name:"SMALL (6 PCS)",price:250},{name:"LARGE (12 PCS)",price:465}] },
+            "butter-cookies": { name: "Butter Cookies", image: "images/butter-cookies-1.png", desc: "Classic butter cookies that melt in your mouth.", options: [{name:"SMALL (6 PCS)",price:300},{name:"LARGE (12 PCS)",price:550}] },
+            "double-chocolate-cookies": { name: "Double Chocolate Cookies", image: "images/double-chocolate-1.png", desc: "Rich chocolate cookies with dark chocolate chunks.", options: [{name:"SMALL (6 PCS)",price:320},{name:"LARGE (12 PCS)",price:590}] },
+            "oatmeal-cookies": { name: "Oatmeal Cookies", image: "images/oatmeal-cookies-1.png", desc: "Healthy oatmeal cookies with raisins and cinnamon.", options: [{name:"SMALL (6 PCS)",price:280},{name:"LARGE (12 PCS)",price:520}] },
+            // PIES
+            "apple-pie": { name: "Classic Apple Pie", image: "images/apple-pie-1.png", desc: "Homemade apple pie with a delicious buttery crust and cinnamon-spiced apples.", options: [{name:"SMALL",price:950},{name:"MEDIUM",price:1750}] },
+            "chocolate-pie": { name: "Chocolate Pie", image: "images/chocolate-pie-1.png", desc: "Silky chocolate pie with a crunchy biscuit base.", options: [{name:"SMALL",price:1100},{name:"MEDIUM",price:1950}] },
+            "fruit-pie": { name: "Fruit Pie", image: "images/fruit-pie-1.png", desc: "Fresh seasonal fruits baked into a golden pie crust.", options: [{name:"SMALL",price:1050},{name:"MEDIUM",price:1850}] },
+            "lemon-pie": { name: "Lemon Pie", image: "images/lemon-pie-1.png", desc: "Zesty lemon pie with a creamy filling and meringue topping.", options: [{name:"SMALL",price:1000},{name:"MEDIUM",price:1800}] },
+            // BEVERAGES
+            "cold-coffee": { name: "Cold Coffee", image: "images/cold-coffee-1.png", desc: "Chilled coffee blended with milk, ice and a hint of chocolate.", options: [{name:"REGULAR",price:450},{name:"LARGE",price:650}] },
+            "cold-beverage": { name: "Fresh Lemonade", image: "images/cold-beverage-1.png", desc: "Freshly squeezed lemonade with mint and ice. Refreshing!", options: [{name:"REGULAR",price:350},{name:"LARGE",price:550}] },
+            "iced-tea": { name: "Iced Tea", image: "images/iced-tea-1.png", desc: "Refreshing iced tea with lemon and mint.", options: [{name:"REGULAR",price:300},{name:"LARGE",price:500}] },
+            "smoothie": { name: "Berry Smoothie", image: "images/smoothie-1.png", desc: "Creamy berry smoothie made with fresh fruits and yogurt.", options: [{name:"REGULAR",price:500},{name:"LARGE",price:750}] },
+            // SAVORIES
+            "chicken-puff": { name: "Chicken Puff", image: "images/chicken-puff-1.png", desc: "Crispy puff pastry filled with spiced chicken.", options: [{name:"SMALL",price:150},{name:"LARGE",price:280}] },
+            "veg-samosa": { name: "Vegetable Samosa", image: "images/veg-samosa-1.png", desc: "Crispy samosa filled with spiced potatoes and peas.", options: [{name:"SMALL",price:120},{name:"LARGE",price:220}] },
+            "chicken-roll": { name: "Chicken Roll", image: "images/chicken-roll-1.png", desc: "Golden puff pastry roll with a delicious chicken filling.", options: [{name:"SMALL",price:180},{name:"LARGE",price:320}] },
+            "cheese-puff": { name: "Cheese Puff", image: "images/cheese-puff-1.png", desc: "Crispy puff pastry filled with melted cheese.", options: [{name:"SMALL",price:160},{name:"LARGE",price:290}] },
+            // BREADS
+            "sourdough-bread": { name: "Sourdough Bread", image: "images/sourdough-1.png", desc: "Artisan sourdough bread with a crispy crust and soft crumb.", options: [{name:"SMALL",price:450},{name:"LARGE",price:800}] },
+            "whole-wheat-bread": { name: "Whole Wheat Bread", image: "images/whole-wheat-1.png", desc: "Healthy whole wheat bread baked with natural ingredients.", options: [{name:"SMALL",price:350},{name:"LARGE",price:620}] },
+            "multigrain-bread": { name: "Multigrain Bread", image: "images/multigrain-1.png", desc: "Wholesome multigrain bread loaded with seeds and grains.", options: [{name:"SMALL",price:400},{name:"LARGE",price:720}] },
+            "french-baguette": { name: "French Baguette", image: "images/baguette-1.png", desc: "Classic French baguette with a crispy crust and soft center.", options: [{name:"SMALL",price:300},{name:"LARGE",price:540}] }
+        };
+
+        const PRODUCT_IMAGES = {
+            "chocolate-cake": "images/chocolate-cake-1.png",
+            "red-velvet": "images/red-velvet-1.png",
+            "vanilla-cake": "images/vanilla-cake-1.png",
+            "cheesecake": "images/cheesecake-1.png",
+            "butter-croissant": "images/croissant-1.png",
+            "chocolate-pastry": "images/chocolate-pastry-1.png",
+            "danish-pastry": "images/danish-pastry-1.png",
+            "almond-croissant": "images/almond-croissant-1.png",
+            "chocolate-chip-cookies": "images/chocolate-chip-cookies-1.png",
+            "butter-cookies": "images/butter-cookies-1.png",
+            "double-chocolate-cookies": "images/double-chocolate-1.png",
+            "oatmeal-cookies": "images/oatmeal-cookies-1.png",
+            "apple-pie": "images/apple-pie-1.png",
+            "chocolate-pie": "images/chocolate-pie-1.png",
+            "fruit-pie": "images/fruit-pie-1.png",
+            "lemon-pie": "images/lemon-pie-1.png",
+            "cold-coffee": "images/cold-coffee-1.png",
+            "cold-beverage": "images/cold-beverage-1.png",
+            "iced-tea": "images/iced-tea-1.png",
+            "smoothie": "images/smoothie-1.png",
+            "chicken-puff": "images/chicken-puff-1.png",
+            "veg-samosa": "images/veg-samosa-1.png",
+            "chicken-roll": "images/chicken-roll-1.png",
+            "cheese-puff": "images/cheese-puff-1.png",
+            "sourdough-bread": "images/sourdough-1.png",
+            "whole-wheat-bread": "images/whole-wheat-1.png",
+            "multigrain-bread": "images/multigrain-1.png",
+            "french-baguette": "images/baguette-1.png",
+            "coffee-mug": "images/merch-mug.png",
+            "tote-bag": "images/merch-bag.png",
+            "glass-tumbler": "images/merch-glass.png",
+            "serving-tray": "images/merch-tray.png",
+            "travel-mug": "images/merch-travel-mug.png",
+            "apron": "images/merch-apron.png",
+            "cap": "images/merch-cap.png",
+            "gift-box": "images/merch-gift-box.png"
+        };
+
+        function getCartItemImage(itemName) {
+            const lower = (itemName || "").toLowerCase();
+            if (lower.includes("chocolate cake")) return PRODUCT_IMAGES["chocolate-cake"];
+            if (lower.includes("red velvet")) return PRODUCT_IMAGES["red-velvet"];
+            if (lower.includes("vanilla cake")) return PRODUCT_IMAGES["vanilla-cake"];
+            if (lower.includes("cheesecake")) return PRODUCT_IMAGES["cheesecake"];
+            if (lower.includes("butter croissant")) return PRODUCT_IMAGES["butter-croissant"];
+            if (lower.includes("almond croissant")) return PRODUCT_IMAGES["almond-croissant"];
+            if (lower.includes("chocolate pastry")) return PRODUCT_IMAGES["chocolate-pastry"];
+            if (lower.includes("danish pastry")) return PRODUCT_IMAGES["danish-pastry"];
+            if (lower.includes("chocolate chip cookie")) return PRODUCT_IMAGES["chocolate-chip-cookies"];
+            if (lower.includes("butter cookie")) return PRODUCT_IMAGES["butter-cookies"];
+            if (lower.includes("double chocolate cookie")) return PRODUCT_IMAGES["double-chocolate-cookies"];
+            if (lower.includes("oatmeal cookie")) return PRODUCT_IMAGES["oatmeal-cookies"];
+            if (lower.includes("apple pie")) return PRODUCT_IMAGES["apple-pie"];
+            if (lower.includes("chocolate pie")) return PRODUCT_IMAGES["chocolate-pie"];
+            if (lower.includes("fruit pie")) return PRODUCT_IMAGES["fruit-pie"];
+            if (lower.includes("lemon pie")) return PRODUCT_IMAGES["lemon-pie"];
+            if (lower.includes("cold coffee")) return PRODUCT_IMAGES["cold-coffee"];
+            if (lower.includes("lemonade")) return PRODUCT_IMAGES["cold-beverage"];
+            if (lower.includes("iced tea")) return PRODUCT_IMAGES["iced-tea"];
+            if (lower.includes("smoothie")) return PRODUCT_IMAGES["smoothie"];
+            if (lower.includes("chicken puff")) return PRODUCT_IMAGES["chicken-puff"];
+            if (lower.includes("samosa")) return PRODUCT_IMAGES["veg-samosa"];
+            if (lower.includes("chicken roll")) return PRODUCT_IMAGES["chicken-roll"];
+            if (lower.includes("cheese puff")) return PRODUCT_IMAGES["cheese-puff"];
+            if (lower.includes("sourdough")) return PRODUCT_IMAGES["sourdough-bread"];
+            if (lower.includes("whole wheat")) return PRODUCT_IMAGES["whole-wheat-bread"];
+            if (lower.includes("multigrain")) return PRODUCT_IMAGES["multigrain-bread"];
+            if (lower.includes("baguette")) return PRODUCT_IMAGES["french-baguette"];
+            if (lower.includes("travel mug")) return PRODUCT_IMAGES["travel-mug"];
+            if (lower.includes("coffee mug") || (lower.includes("mug") && !lower.includes("travel"))) return PRODUCT_IMAGES["coffee-mug"];
+            if (lower.includes("tote bag")) return PRODUCT_IMAGES["tote-bag"];
+            if (lower.includes("glass tumbler")) return PRODUCT_IMAGES["glass-tumbler"];
+            if (lower.includes("serving tray")) return PRODUCT_IMAGES["serving-tray"];
+            if (lower.includes("apron")) return PRODUCT_IMAGES["apron"];
+            if (lower.includes("cap")) return PRODUCT_IMAGES["cap"];
+            if (lower.includes("gift box")) return PRODUCT_IMAGES["gift-box"];
+            return "images/logo.png";
+        }
+
+        /* ---------- TICKER ---------- */
+        function initTicker() {
+            const track = document.getElementById("tickerTrack");
+            if (!track) return;
+            let locationText = "Karachi, Pakistan";
+            function buildContent(loc) {
+                const now = new Date();
+                const dateStr = now.toLocaleDateString("en-PK", { weekday: "long", day: "2-digit", month: "long", year: "numeric" });
+                const timeStr = now.toLocaleTimeString("en-PK", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+                return `
+                    <span><i class="fa-solid fa-calendar-days"></i> <strong>Date:</strong> ${dateStr}</span>
+                    <span><i class="fa-solid fa-clock"></i> <strong>Time:</strong> ${timeStr}</span>
+                    <span><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> ${loc}</span>
+                    <span><i class="fa-solid fa-cake-candles"></i> Welcome to Bakerz Bite — Where Smiles Are Served Daily!</span>
+                `;
+            }
+            function refresh() { track.innerHTML = buildContent(locationText) + buildContent(locationText); }
+            refresh();
+            setInterval(refresh, 1000);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (pos) {
+                        const lat = pos.coords.latitude.toFixed(3);
+                        const lon = pos.coords.longitude.toFixed(3);
+                        locationText = `Lat ${lat}, Lon ${lon}`;
+                        refresh();
+                    },
+                    function () {},
+                    { timeout: 8000 }
+                );
+            }
+        }
+
+        /* ---------- LOCATION POPUP ---------- */
+        function initLocationPopup() {
+            const popup = document.getElementById("locPopup");
+            if (!popup) return;
+
+            if (!sessionStorage.getItem("bb_location_chosen")) {
+                setTimeout(() => popup.classList.add("show"), 300);
+            }
+
+            const toggleBtns = popup.querySelectorAll(".bb-order-toggle button");
+            const question = document.getElementById("locQuestion");
+            toggleBtns.forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    toggleBtns.forEach(b => b.classList.remove("active"));
+                    this.classList.add("active");
+                    const mode = this.getAttribute("data-mode");
+                    question.textContent = mode === "pickup"
+                        ? "Which outlet would you like to pick-up from?"
+                        : "Which outlet would you like to order from?";
+                });
+            });
+
+            const branchSelect = document.getElementById("branchSelect");
+            const branchName = document.getElementById("branchName");
+            const branchAddress = document.getElementById("branchAddress");
+            const branchDirections = document.getElementById("branchDirections");
+
+            function updateBranchDetails() {
+                const opt = branchSelect.options[branchSelect.selectedIndex];
+                branchName.textContent = opt.getAttribute("data-name");
+                branchAddress.textContent = "Address: " + opt.getAttribute("data-address");
+                const lat = opt.getAttribute("data-lat");
+                const lng = opt.getAttribute("data-lng");
+                branchDirections.href = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
+            }
+            branchSelect.addEventListener("change", updateBranchDetails);
+            updateBranchDetails();
+
+            const useBtn = document.getElementById("useCurrentLocBtn");
+            useBtn.addEventListener("click", function () {
+                if (!navigator.geolocation) { alert("Geolocation not supported."); return; }
+                useBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Locating...';
+                useBtn.disabled = true;
+                navigator.geolocation.getCurrentPosition(
+                    function (pos) {
+                        const lat = pos.coords.latitude;
+                        const lng = pos.coords.longitude;
+                        let nearest = null, minDist = Infinity;
+                        branchSelect.querySelectorAll("option").forEach(function (opt) {
+                            const bLat = parseFloat(opt.getAttribute("data-lat"));
+                            const bLng = parseFloat(opt.getAttribute("data-lng"));
+                            const d = Math.sqrt(Math.pow(lat - bLat, 2) + Math.pow(lng - bLng, 2));
+                            if (d < minDist) { minDist = d; nearest = opt.value; }
+                        });
+                        if (nearest) { branchSelect.value = nearest; updateBranchDetails(); }
+                        useBtn.innerHTML = '<i class="fa-solid fa-check"></i> Location Detected';
+                        setTimeout(function () {
+                            useBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Use Current Location';
+                            useBtn.disabled = false;
+                        }, 2000);
+                    },
+                    function () {
+                        alert("Unable to get location. Select branch manually.");
+                        useBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Use Current Location';
+                        useBtn.disabled = false;
+                    },
+                    { timeout: 10000 }
+                );
+            });
+
+            const selectBtn = document.getElementById("locSelectBtn");
+            const topbarBranchName = document.getElementById("topbarBranchName");
+            const topbarLocationPill = document.getElementById("topbarLocationPill");
+
+            selectBtn.addEventListener("click", function () {
+                const opt = branchSelect.options[branchSelect.selectedIndex];
+                const name = opt.getAttribute("data-name");
+                sessionStorage.setItem("bb_location_chosen", "yes");
+                sessionStorage.setItem("bb_location_name", name);
+                if (topbarBranchName) topbarBranchName.textContent = name;
+                popup.classList.remove("show");
+            });
+
+            if (sessionStorage.getItem("bb_location_chosen")) {
+                const savedName = sessionStorage.getItem("bb_location_name");
+                if (topbarBranchName && savedName) topbarBranchName.textContent = savedName;
+            }
+
+            if (topbarLocationPill) {
+                topbarLocationPill.addEventListener("click", function () {
+                    popup.classList.add("show");
+                });
+            }
+        }
+
+        /* ---------- CART ---------- */
+        function getCart() {
+            try {
+                return JSON.parse(localStorage.getItem("bb_cart") || "[]");
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveCart(items) {
+            try {
+                localStorage.setItem("bb_cart", JSON.stringify(items));
+            } catch (e) {}
+        }
+
+        function updateCartBadge() {
+            const items = getCart();
+            document.querySelectorAll(".bb-cart-count").forEach(function (el) {
+                el.textContent = items.length;
+            });
+        }
+
+        function addToCart(name, price, qty, notes) {
+            const items = getCart();
+            for (let i = 0; i < qty; i++) {
+                items.push({ name: name, price: price, notes: notes || "", time: Date.now() });
+            }
+            saveCart(items);
+            updateCartBadge();
+            showToast(name + " added to cart!");
+        }
+
+        function removeFromCart(index) {
+            const items = getCart();
+            if (index < 0 || index >= items.length) return;
+            const removed = items.splice(index, 1);
+            saveCart(items);
+            updateCartBadge();
+            renderCartModal();
+            if (removed[0]) showToast(removed[0].name + " removed from cart!");
+        }
+
+        function clearCart() {
+            if (getCart().length === 0) {
+                showToast("Cart is already empty!");
+                return;
+            }
+            saveCart([]);
+            updateCartBadge();
+            renderCartModal();
+            showToast("Cart cleared successfully!");
+        }
+
+        function renderCartModal() {
+            const body = document.getElementById("cartModalBody");
+            const totalPrice = document.getElementById("cartTotalPrice");
+            if (!body) return;
+
+            const items = getCart();
+
+            if (items.length === 0) {
+                body.innerHTML = `
+                    <div class="bb-cart-empty">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <h4>Your cart is empty</h4>
+                        <p>Add some delicious items from our menu!</p>
+                    </div>
+                `;
+                if (totalPrice) totalPrice.textContent = "Rs. 0";
+                return;
+            }
+
+            let html = "";
+            let total = 0;
+
+            items.forEach(function (item, index) {
+                total += item.price;
+                const img = getCartItemImage(item.name);
+                const noteHtml = item.notes ? `<small><i class="fa-solid fa-pencil"></i> ${item.notes}</small>` : "";
+                html += `
+                    <div class="bb-cart-item">
+                        <div class="bb-cart-item-img">
+                            <img src="${img}" alt="${item.name}" onerror="this.src='images/logo.png'">
+                        </div>
+                        <div class="bb-cart-item-info">
+                            <h5>${item.name}</h5>
+                            <p>Rs. ${item.price.toLocaleString()}</p>
+                            ${noteHtml}
+                        </div>
+                        <button class="bb-cart-item-remove" onclick="window.bbRemoveCartItem(${index})" aria-label="Remove">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            body.innerHTML = html;
+            if (totalPrice) totalPrice.textContent = "Rs. " + total.toLocaleString();
+        }
+
+        window.bbRemoveCartItem = function (index) {
+            removeFromCart(index);
+        };
+
+        function initCartModal() {
+            const openBtn = document.getElementById("openCartBtn");
+            const clearBtn = document.getElementById("clearCartBtn");
+            const checkoutBtn = document.getElementById("checkoutBtn");
+
+            if (openBtn) {
+                openBtn.addEventListener("click", function () {
+                    renderCartModal();
+                    const modal = new bootstrap.Modal(document.getElementById("cartModal"));
+                    modal.show();
+                });
+            }
+
+            if (clearBtn) clearBtn.addEventListener("click", clearCart);
+
+            if (checkoutBtn) {
+                checkoutBtn.addEventListener("click", function () {
+                    const items = getCart();
+                    if (items.length === 0) {
+                        showToast("Your cart is empty!");
+                        return;
+                    }
+                    const total = items.reduce((s, i) => s + i.price, 0);
+                    showToast("Order placed! Total: Rs. " + total.toLocaleString());
+                    setTimeout(function () {
+                        clearCart();
+                        const modal = bootstrap.Modal.getInstance(document.getElementById("cartModal"));
+                        if (modal) modal.hide();
+                    }, 1500);
+                });
+            }
+        }
+
+        /* ---------- TOAST ---------- */
+        let toastEl = null, toastTimer = null;
+        function showToast(msg) {
+            if (!toastEl) {
+                toastEl = document.createElement("div");
+                toastEl.className = "bb-toast";
+                toastEl.innerHTML = '<i class="fa-solid fa-circle-check"></i><span></span>';
+                document.body.appendChild(toastEl);
+            }
+            toastEl.querySelector("span").textContent = msg;
+            toastEl.classList.add("show");
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2500);
+        }
+
+        /* ---------- PRODUCT MODAL ---------- */
+        let currentProductKey = null;
+        let currentOptionIndex = 0;
+        let currentQty = 1;
+
+        function openProductModal(key) {
+            const p = PRODUCTS[key];
+            if (!p) return;
+            currentProductKey = key;
+            currentOptionIndex = 0;
+            currentQty = 1;
+
+            document.getElementById("pmodalImg").src = p.image;
+            document.getElementById("pmodalImgTitle").textContent = p.name;
+            document.getElementById("pmodalDesc").textContent = p.desc;
+            document.getElementById("pmodalQty").textContent = "1";
+            document.getElementById("pmodalNotes").value = "";
+            document.getElementById("pmodalCharCount").textContent = "0";
+
+            renderOptions(p);
+            updateTotalPrice(p);
+            updatePriceHeader(p);
+            new bootstrap.Modal(document.getElementById("productModal")).show();
+        }
+
+        function renderOptions(p) {
+            const box = document.getElementById("pmodalOptions");
+            box.innerHTML = p.options.map((opt, i) => `
+                <div class="bb-option-pill ${i === 0 ? "active" : ""}" data-index="${i}">
+                    <span class="bb-option-radio"></span>
+                    <div class="bb-option-info">
+                        <span class="bb-option-name">${opt.name}</span>
+                        <span class="bb-option-price">Rs. ${opt.price.toLocaleString()}</span>
+                    </div>
+                </div>
+            `).join("");
+            box.querySelectorAll(".bb-option-pill").forEach(function (pill) {
+                pill.addEventListener("click", function () {
+                    box.querySelectorAll(".bb-option-pill").forEach(x => x.classList.remove("active"));
+                    this.classList.add("active");
+                    currentOptionIndex = parseInt(this.getAttribute("data-index"), 10);
+                    updateTotalPrice(p);
+                    updatePriceHeader(p);
+                });
+            });
+        }
+
+        function updatePriceHeader(p) {
+            document.getElementById("pmodalPrice").textContent = "Rs. " + p.options[currentOptionIndex].price.toLocaleString();
+        }
+        function updateTotalPrice(p) {
+            const total = p.options[currentOptionIndex].price * currentQty;
+            document.getElementById("pmodalTotalPrice").textContent = "Rs. " + total.toLocaleString();
+        }
+
+        function initProductCards() {
+            document.querySelectorAll(".bb-uk-card").forEach(function (card) {
+                card.addEventListener("click", function (e) {
+                    if (e.target.closest(".bb-size-pills") || e.target.closest(".bb-add-btn")) return;
+                    openProductModal(this.getAttribute("data-product"));
+                });
+                const addBtn = card.querySelector(".bb-add-btn");
+                if (addBtn) {
+                    addBtn.addEventListener("click", function (e) {
+                        e.stopPropagation();
+                        openProductModal(card.getAttribute("data-product"));
+                    });
+                }
+                card.querySelectorAll(".bb-size-pills span").forEach(function (pill) {
+                    pill.addEventListener("click", function (e) {
+                        e.stopPropagation();
+                        card.querySelectorAll(".bb-size-pills span").forEach(p => p.classList.remove("active"));
+                        this.classList.add("active");
+                    });
+                });
+            });
+        }
+
+        function initModalActions() {
+            const qtyPlus = document.querySelector(".bb-qty-plus");
+            const qtyMinus = document.querySelector(".bb-qty-minus");
+            const qtyVal = document.getElementById("pmodalQty");
+            const notes = document.getElementById("pmodalNotes");
+            const charCount = document.getElementById("pmodalCharCount");
+            const addCartBtn = document.getElementById("pmodalAddCart");
+
+            if (qtyPlus) qtyPlus.addEventListener("click", function () {
+                currentQty += 1;
+                qtyVal.textContent = currentQty;
+                updateTotalPrice(PRODUCTS[currentProductKey]);
+            });
+            if (qtyMinus) qtyMinus.addEventListener("click", function () {
+                if (currentQty > 1) {
+                    currentQty -= 1;
+                    qtyVal.textContent = currentQty;
+                    updateTotalPrice(PRODUCTS[currentProductKey]);
+                }
+            });
+            if (notes) notes.addEventListener("input", function () {
+                charCount.textContent = this.value.length;
+            });
+            if (addCartBtn) addCartBtn.addEventListener("click", function () {
+                const p = PRODUCTS[currentProductKey];
+                if (!p) return;
+                const opt = p.options[currentOptionIndex];
+                const noteText = notes ? notes.value.trim() : "";
+                addToCart(p.name + " (" + opt.name + ")", opt.price, currentQty, noteText);
+                const modal = bootstrap.Modal.getInstance(document.getElementById("productModal"));
+                if (modal) modal.hide();
+            });
+        }
+
+        function initFilters() {
+            const btns = document.querySelectorAll(".bb-filter-btn");
+            const items = document.querySelectorAll(".menu-item");
+            const emptyState = document.getElementById("emptyState");
+
+            btns.forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    btns.forEach(b => b.classList.remove("active"));
+                    this.classList.add("active");
+
+                    const filter = this.getAttribute("data-filter");
+                    let visibleCount = 0;
+
+                    items.forEach(function (item) {
+                        const cat = item.getAttribute("data-category");
+                        if (filter === "all" || cat === filter) {
+                            item.style.display = "";
+                            visibleCount++;
+                        } else {
+                            item.style.display = "none";
+                        }
+                    });
+
+                    if (visibleCount === 0) {
+                        emptyState.classList.add("show");
+                    } else {
+                        emptyState.classList.remove("show");
+                    }
+                });
+            });
+
+            const hash = (window.location.hash || "").replace("#", "").toLowerCase();
+            if (hash) {
+                const btn = document.querySelector(`.bb-filter-btn[data-filter="${hash}"]`);
+                if (btn) btn.click();
+            }
+        }
+
+        function initDropdownMenu() {
+            const toggle = document.getElementById("bbMenuToggle");
+            const panel = document.getElementById("bbDropdownPanel");
+            const overlay = document.getElementById("bbDropdownOverlay");
+            const closeBtn = document.getElementById("bbDropdownClose");
+
+            if (!toggle || !panel) return;
+
+            function openMenu() {
+                panel.classList.add("show");
+                overlay.classList.add("show");
+                document.body.style.overflow = "hidden";
+            }
+            function closeMenu() {
+                panel.classList.remove("show");
+                overlay.classList.remove("show");
+                document.body.style.overflow = "";
+            }
+
+            toggle.addEventListener("click", openMenu);
+            closeBtn.addEventListener("click", closeMenu);
+            overlay.addEventListener("click", closeMenu);
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape") closeMenu();
+            });
+        }
+
+        function initScrollTop() {
+            const btn = document.getElementById("scrollTopBtn");
+            if (!btn) return;
+            window.addEventListener("scroll", function () {
+                btn.classList.toggle("show", window.scrollY > 400);
+            });
+            btn.addEventListener("click", function () {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            initTicker();
+            initLocationPopup();
+            updateCartBadge();
+            initCartModal();
+            initProductCards();
+            initModalActions();
+            initFilters();
+            initDropdownMenu();
+            initScrollTop();
+            console.log("🍰 Bakerz Bite Menu Page Loaded! Cart Modal with images ready.");
+        });
+
+    })();
+    </script>
+
+</body>
+</html>
